@@ -1,4 +1,4 @@
-import 'package:bounce_breaker/game_configuration/constants.dart';
+import 'package:bounce_breaker/configuration/constants.dart';
 import 'package:bounce_breaker/main.dart';
 import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
