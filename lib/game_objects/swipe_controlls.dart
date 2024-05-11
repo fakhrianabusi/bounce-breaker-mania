@@ -1,27 +1,32 @@
+import 'package:bounce_breaker/game_objects/player_stick.dart';
+import 'package:bounce_breaker/main.dart';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
 import 'package:flame/events.dart';
 import 'package:flutter/material.dart';
 
-import '../main.dart';
-
-class PlayerStick extends PositionComponent
+class SwipeControllArea extends PositionComponent
     with DragCallbacks, HasGameReference<BounceBreaker> {
-  PlayerStick({
+  final PlayerStick target;
+  SwipeControllArea({
+    required this.target,
     required this.cornerRadius,
     required super.position,
     required super.size,
   }) : super(
-          anchor: Anchor.center,
+          anchor: Anchor.bottomCenter,
           children: [RectangleHitbox()],
         );
 
   final Radius cornerRadius;
 
   final _paint = Paint()
-    ..color = const Color(0xffffffff)
-    ..style = PaintingStyle.fill;
+    ..color = const Color(0x88FFFFFF)
+    ..style = PaintingStyle.stroke
+    ..shader = const LinearGradient(
+      colors: [Colors.white, Colors.black],
+    ).createShader(const Rect.fromLTWH(0, 0, 1, 1));
 
   @override
   void render(Canvas canvas) {
@@ -35,19 +40,21 @@ class PlayerStick extends PositionComponent
   }
 
   @override
-  void onDragUpdate(DragUpdateEvent event) {
+  void onDragUpdate(
+    DragUpdateEvent event,
+  ) {
     super.onDragUpdate(event);
     position.x = (position.x + event.localDelta.x).clamp(0, game.width);
+    target.setPositionX(position.x);
   }
 
   void moveBy(double dx) {
-    add(MoveToEffect(
-      Vector2((position.x + dx).clamp(0, game.width), position.y),
-      EffectController(duration: 0.1),
-    ));
-  }
-
-  void setPositionX(double newX) {
-    position.x = newX.clamp(0, game.width);
+    add(
+      MoveToEffect(
+        Vector2((position.x + dx).clamp(0, game.width), position.y),
+        EffectController(duration: 0.1),
+        target: this,
+      ),
+    );
   }
 }
