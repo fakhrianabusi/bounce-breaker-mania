@@ -1,12 +1,14 @@
 import 'dart:math';
 
-import 'package:bounce_breaker/configuration/screen.dart';
-import 'package:bounce_breaker/game_objects/player_stick.dart';
-import 'package:bounce_breaker/main.dart';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
 import 'package:flutter/material.dart';
+
+import '../configuration/screen.dart';
+import '../game/bounce_breaker_mania.dart';
+import 'block.dart';
+import 'player_stick.dart';
 
 class Ball extends CircleComponent
     with CollisionCallbacks, HasGameRef<BounceBreaker> {
@@ -61,6 +63,17 @@ class Ball extends CircleComponent
       velocity.y = -velocity.y;
       velocity.x = velocity.x +
           (position.x - other.position.x) / other.size.x * game.width * 0.3;
+    } else if (other is GameBlocks) {
+      if (position.y < other.position.y - other.size.y / 2) {
+        velocity.y = -velocity.y;
+      } else if (position.y > other.position.y + other.size.y / 2) {
+        velocity.y = -velocity.y;
+      } else if (position.x < other.position.x) {
+        velocity.x = -velocity.x;
+      } else if (position.x > other.position.x) {
+        velocity.x = -velocity.x;
+      }
+      velocity.setFrom(velocity * difficultyModifier);
     }
   }
 }
@@ -95,8 +108,7 @@ class Trail extends Component {
         canvas.drawPath(path, _linePaint);
       }
     }
-    double sideLength = (lineWidth - 2) * _opacity.last +
-        2; // This will be the side length of the square
+    double sideLength = (lineWidth - 2) * _opacity.last + 2;
 
     canvas.drawRect(
       Rect.fromCenter(

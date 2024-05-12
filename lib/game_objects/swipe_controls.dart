@@ -1,15 +1,16 @@
-import 'package:bounce_breaker/game_objects/player_stick.dart';
-import 'package:bounce_breaker/main.dart';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
 import 'package:flame/events.dart';
 import 'package:flutter/material.dart';
 
-class SwipeControllArea extends PositionComponent
+import '../game/bounce_breaker_mania.dart';
+import 'player_stick.dart';
+
+class SwipeControlArea extends PositionComponent
     with DragCallbacks, HasGameReference<BounceBreaker> {
   final PlayerStick target;
-  SwipeControllArea({
+  SwipeControlArea({
     required this.target,
     required this.cornerRadius,
     required super.position,

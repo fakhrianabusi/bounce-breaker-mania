@@ -1,10 +1,11 @@
 import 'dart:async';
 
-import 'package:bounce_breaker/configuration/constants.dart';
-import 'package:bounce_breaker/main.dart';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
+
+import '../game/bounce_breaker_mania.dart';
+import 'constants.dart';
 
 class Screen extends RectangleComponent with HasGameReference<BounceBreaker> {
   Screen()

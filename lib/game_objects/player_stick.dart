@@ -4,7 +4,7 @@ import 'package:flame/effects.dart';
 import 'package:flame/events.dart';
 import 'package:flutter/material.dart';
 
-import '../main.dart';
+import '../game/bounce_breaker_mania.dart';
 
 class PlayerStick extends PositionComponent
     with DragCallbacks, HasGameReference<BounceBreaker> {

@@ -8,3 +8,5 @@ const playerStickWidth = 200.00;
 const playerStickHeight = 40.00;
 const playerStickMoveSteps = screenWidth * 0.03;
 const difficultyModifier = 1.0;
+const brickWidth = 50.00;
+const brickHeight = 20.00;
