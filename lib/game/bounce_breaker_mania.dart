@@ -28,7 +28,7 @@ class BounceBreaker extends FlameGame
         (GameConstants.noBricksInRow + 1) * GameConstants.brickPadding;
     final screenMinSize = size.x < size.y ? size.x : size.y;
     return (screenMinSize - totalPadding) / GameConstants.noBricksInRow;
-  }
+  } // Calculate the size of the bricks based on the screen size
 
   @override
   Future<void> onLoad() async {
@@ -66,7 +66,7 @@ class BounceBreaker extends FlameGame
                 row * (brickSize + GameConstants.brickPadding) +
                     GameConstants.brickPadding * 2,
               ) +
-              Vector2(0, height * 0.1)
+              Vector2(0, height * 0.1) // Offset of the bricks from the top
     ]);
   }
 }

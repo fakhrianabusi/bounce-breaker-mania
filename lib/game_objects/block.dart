@@ -12,7 +12,7 @@ class GameBlocks extends RectangleComponent
     required Color color,
     required double size,
   }) : super(
-          size: Vector2.all(size), // Tamanho do bloco
+          size: Vector2.all(size), // block size
           paint: Paint()
             ..color = color
             ..style = PaintingStyle.fill,
