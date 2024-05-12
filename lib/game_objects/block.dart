@@ -2,57 +2,72 @@ import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
 
-import '../configuration/constants.dart';
 import '../game/bounce_breaker_mania.dart';
 import 'ball.dart';
 
 class GameBlocks extends RectangleComponent
     with CollisionCallbacks, HasGameReference<BounceBreaker> {
-  GameBlocks(
-      {required Vector2 position,
-      required Color color,
-      this.durability = 5,
-      required this.durabilityText})
-      : super(
-          size: Vector2(brickWidth, brickHeight), // Tamanho do bloco
-          anchor: Anchor.center,
-          position: position,
+  GameBlocks({
+    required this.durability,
+    required Color color,
+    required double size,
+  }) : super(
+          size: Vector2.all(size), // Tamanho do bloco
           paint: Paint()
             ..color = color
             ..style = PaintingStyle.fill,
-          children: [
-            RectangleHitbox(),
-            TextComponent(
-              text: durabilityText,
-              textRenderer: TextPaint(
-                style: const TextStyle(
-                  color: Colors.black,
-                  fontSize: 22,
-                ),
-              ),
-            )..center = Vector2(brickWidth / 2, brickHeight / 2),
-          ],
         );
   int durability;
-  String? durabilityText;
+  bool hasCollided = false;
+  late final TextComponent textComponent;
+
+  @override
+  Future<void> onLoad() async {
+    if (durability <= 0) {
+      removeFromParent();
+      return;
+    }
+
+    textComponent = TextComponent(
+      text: '$durability',
+      textRenderer: TextPaint(
+        style: const TextStyle(
+          color: Colors.black,
+          fontSize: 20,
+        ),
+      ),
+    )..center = size / 2;
+
+    await add(textComponent);
+
+    await add(RectangleHitbox());
+  }
 
   @override
   void update(double dt) {
-    super.update(dt);
-    durabilityText = durability.toString(); // Atualiza o texto da durabilidade
+    if (hasCollided) {
+      textComponent.text = '$durability';
+    }
   }
 
   @override
   void onCollisionStart(
       Set<Vector2> intersectionPoints, PositionComponent other) {
-    super.onCollisionStart(intersectionPoints, other);
-    if (other is Ball) {
-      durability--;
-      if (durability <= 0) {
+    if (other is Ball && !hasCollided) {
+      hasCollided = true;
+      if (--durability == 0) {
         removeFromParent();
-      } else {
-        durabilityText = durability.toString();
+        return;
       }
     }
+    super.onCollisionStart(intersectionPoints, other);
+  }
+
+  @override
+  void onCollisionEnd(PositionComponent other) {
+    if (hasCollided) {
+      hasCollided = false;
+    }
+    super.onCollisionEnd(other);
   }
 }

@@ -22,11 +22,20 @@ class BounceBreaker extends FlameGame
   final rand = math.Random();
   double get width => size.x;
   double get height => size.y;
+
+  double get brickSize {
+    const totalPadding =
+        (GameConstants.noBricksInRow + 1) * GameConstants.brickPadding;
+    final screenMinSize = size.x < size.y ? size.x : size.y;
+    return (screenMinSize - totalPadding) / GameConstants.noBricksInRow;
+  }
+
   @override
   Future<void> onLoad() async {
     super.onLoad();
     camera.viewfinder.anchor = Anchor.topLeft;
     world.add(Screen());
+
     world.add(Ball(
         difficultyModifier: difficultyModifier,
         radius: ballRadius,
@@ -44,22 +53,20 @@ class BounceBreaker extends FlameGame
         cornerRadius: const Radius.circular(ballRadius / 2),
         position: Vector2(width / 2, height * 1.0)));
 
-    for (int row = 0; row < 5; row++) {
-      for (int col = 0; col < 10; col++) {
-        int durability =
-            math.Random().nextInt(6) + 1; // Durabilidade aleatória entre 1 e 5
-        Vector2 position = Vector2(
-          (screenWidth / 10) * col + 25,
-          (screenHeight / 10) * row + 25,
-        ); // Posição inicial dos blocos
-        Color color = Colors.white; // Cor do bloco
-        world.add(GameBlocks(
-          position: position,
-          color: color,
-          durability: durability,
-          durabilityText: durability.toString(),
-        ));
-      }
-    }
+    world.addAll([
+      for (var row = 0; row < 5; row++)
+        for (var col = 0; col < 10; col++)
+          GameBlocks(
+            color: Colors.white,
+            durability: rand.nextInt(3) + 1,
+            size: brickSize,
+          )..position = Vector2(
+                col * (brickSize + GameConstants.brickPadding) +
+                    GameConstants.brickPadding,
+                row * (brickSize + GameConstants.brickPadding) +
+                    GameConstants.brickPadding * 2,
+              ) +
+              Vector2(0, height * 0.1)
+    ]);
   }
 }
