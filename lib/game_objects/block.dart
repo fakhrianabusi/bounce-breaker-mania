@@ -27,10 +27,10 @@ class GameBlocks extends RectangleComponent
               textRenderer: TextPaint(
                 style: const TextStyle(
                   color: Colors.black,
-                  fontSize: 18,
+                  fontSize: 22,
                 ),
               ),
-            )..center
+            )..center = Vector2(brickWidth / 2, brickHeight / 2),
           ],
         );
   int durability;
@@ -50,6 +50,8 @@ class GameBlocks extends RectangleComponent
       durability--;
       if (durability <= 0) {
         removeFromParent();
+      } else {
+        durabilityText = durability.toString();
       }
     }
   }
