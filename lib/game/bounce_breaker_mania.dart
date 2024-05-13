@@ -3,6 +3,7 @@ import 'dart:math' as math;
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
+import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
 
 import '../configuration/constants.dart';
@@ -22,7 +23,7 @@ class BounceBreaker extends FlameGame
   final rand = math.Random();
   double get width => size.x;
   double get height => size.y;
-
+  int get durability => rand.nextInt(2) + 1;
   double get brickSize {
     const totalPadding =
         (GameConstants.noBricksInRow + 1) * GameConstants.brickPadding;
@@ -32,7 +33,8 @@ class BounceBreaker extends FlameGame
 
   @override
   Future<void> onLoad() async {
-    super.onLoad();
+    FlameAudio.bgm.play('arcade.mp3', volume: 0.5);
+
     camera.viewfinder.anchor = Anchor.topLeft;
     world.add(Screen());
 
@@ -57,8 +59,8 @@ class BounceBreaker extends FlameGame
       for (var row = 0; row < 5; row++)
         for (var col = 0; col < 10; col++)
           GameBlocks(
-            color: Colors.white,
-            durability: rand.nextInt(3) + 1,
+            color: const Color.fromARGB(255, 1, 217, 166),
+            durability: durability,
             size: brickSize,
           )..position = Vector2(
                 col * (brickSize + GameConstants.brickPadding) +
@@ -68,5 +70,6 @@ class BounceBreaker extends FlameGame
               ) +
               Vector2(0, height * 0.1) // Offset of the bricks from the top
     ]);
+    super.onLoad();
   }
 }

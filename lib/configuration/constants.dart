@@ -14,8 +14,14 @@ const ballRadius = screenWidth * 0.02;
 const playerStickWidth = 200.00;
 const playerStickHeight = 40.00;
 const playerStickMoveSteps = screenWidth * 0.03;
-const difficultyModifier = 1.0;
+const difficultyModifier = 1.02;
 const brickWidth = 60.00;
 const brickHeight = 40.00;
 const padding = 10.0;
 const brickGutter = screenWidth * 0.015;
+
+final Map<int, Color> blockColors = {
+  1: Colors.red,
+  2: Colors.green,
+  3: Colors.blue,
+};

@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
+import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
 
 import '../configuration/screen.dart';
@@ -43,6 +44,14 @@ class Ball extends CircleComponent
     gameRef.world.add(trail);
   }
 
+  gameOver() {
+    position = Vector2(game.width / 2, game.height / 2);
+    velocity.setValues(0, 0);
+    gameRef.world.children.whereType<GameBlocks>().forEach((element) {
+      element.removeFromParent();
+    });
+  }
+
   @override
   void onCollisionStart(
       Set<Vector2> intersectionPoints, PositionComponent other) {
@@ -50,6 +59,7 @@ class Ball extends CircleComponent
     if (other is Screen) {
       if (intersectionPoints.first.y <= 0) {
         velocity.y = -velocity.y;
+        velocity.setFrom(velocity - velocity * 0.3);
       } else if (intersectionPoints.first.x <= 0) {
         velocity.x = -velocity.x;
       } else if (intersectionPoints.first.x >= game.width) {
@@ -58,6 +68,8 @@ class Ball extends CircleComponent
         add(RemoveEffect(
           delay: 0.35,
         ));
+        FlameAudio.bgm.stop();
+        gameOver();
       }
     } else if (other is PlayerStick) {
       velocity.y = -velocity.y;
