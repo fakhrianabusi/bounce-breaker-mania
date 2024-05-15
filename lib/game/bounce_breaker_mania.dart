@@ -13,20 +13,17 @@ import '../game_objects/block.dart';
 import '../game_objects/player_stick.dart';
 import '../game_objects/swipe_controls.dart';
 
-class BounceBreaker extends FlameGame
-    with HasCollisionDetection, DragCallbacks {
+class BounceBreaker extends FlameGame with HasCollisionDetection, DragCallbacks {
   BounceBreaker()
       : super(
-          camera: CameraComponent.withFixedResolution(
-              width: screenWidth, height: screenHeight),
+          camera: CameraComponent.withFixedResolution(width: screenWidth, height: screenHeight),
         );
   final rand = math.Random();
   double get width => size.x;
   double get height => size.y;
-  int get durability => rand.nextInt(2) + 1;
+  int get getDurability => rand.nextInt(2) + 1;
   double get brickSize {
-    const totalPadding =
-        (GameConstants.noBricksInRow + 1) * GameConstants.brickPadding;
+    const totalPadding = (GameConstants.noBricksInRow + 1) * GameConstants.brickPadding;
     final screenMinSize = size.x < size.y ? size.x : size.y;
     return (screenMinSize - totalPadding) / GameConstants.noBricksInRow;
   } // Calculate the size of the bricks based on the screen size
@@ -42,9 +39,7 @@ class BounceBreaker extends FlameGame
         difficultyModifier: difficultyModifier,
         radius: ballRadius,
         position: size / 2,
-        velocity: Vector2((rand.nextDouble() - 0.5) * width, height * 0.2)
-            .normalized()
-          ..scale(height / 4)));
+        velocity: Vector2((rand.nextDouble() - 0.5) * width, height * 0.2).normalized()..scale(height / 4)));
     world.add(PlayerStick(
         size: Vector2(playerStickWidth, playerStickHeight),
         cornerRadius: const Radius.circular(ballRadius / 2),
@@ -55,21 +50,22 @@ class BounceBreaker extends FlameGame
         cornerRadius: const Radius.circular(ballRadius / 2),
         position: Vector2(width / 2, height * 1.0)));
 
-    world.addAll([
-      for (var row = 0; row < 5; row++)
-        for (var col = 0; col < 10; col++)
-          GameBlocks(
-            color: const Color.fromARGB(255, 1, 217, 166),
-            durability: durability,
-            size: brickSize,
-          )..position = Vector2(
-                col * (brickSize + GameConstants.brickPadding) +
-                    GameConstants.brickPadding,
-                row * (brickSize + GameConstants.brickPadding) +
-                    GameConstants.brickPadding * 2,
-              ) +
-              Vector2(0, height * 0.1) // Offset of the bricks from the top
-    ]);
+    for (var row = 0; row < 5; row++) {
+      for (var col = 0; col < 10; col++) {
+        int durability = getDurability;
+
+        final gameBlock = GameBlocks(
+          color: GameBlocks.getBlockColor(durability),
+          durability: durability,
+          size: brickSize,
+        )..position = Vector2(
+              col * (brickSize + GameConstants.brickPadding) + GameConstants.brickPadding,
+              row * (brickSize + GameConstants.brickPadding) + GameConstants.brickPadding * 2,
+            ) +
+            Vector2(0, height * 0.1); // Offset of the bricks from the top
+        world.add(gameBlock);
+      }
+    }
     super.onLoad();
   }
 }

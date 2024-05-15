@@ -5,8 +5,7 @@ import 'package:flutter/material.dart';
 import '../game/bounce_breaker_mania.dart';
 import 'ball.dart';
 
-class GameBlocks extends RectangleComponent
-    with CollisionCallbacks, HasGameReference<BounceBreaker> {
+class GameBlocks extends RectangleComponent with CollisionCallbacks, HasGameReference<BounceBreaker> {
   GameBlocks({
     required this.durability,
     required Color color,
@@ -20,6 +19,16 @@ class GameBlocks extends RectangleComponent
   int durability;
   bool hasCollided = false;
   late final TextComponent textComponent;
+
+  static Color getBlockColor(int durability) {
+    if (durability == 1) {
+      return const Color.fromARGB(255, 161, 103, 238);
+    } else if (durability == 2) {
+      return const Color.fromARGB(255, 1, 217, 166);
+    } else {
+      throw Exception('Cor indefinida para durabilidade $durability');
+    }
+  }
 
   @override
   Future<void> onLoad() async {
@@ -51,14 +60,21 @@ class GameBlocks extends RectangleComponent
   }
 
   @override
-  void onCollisionStart(
-      Set<Vector2> intersectionPoints, PositionComponent other) {
+  void onCollisionStart(Set<Vector2> intersectionPoints, PositionComponent other) {
     if (other is Ball && !hasCollided) {
       hasCollided = true;
-      if (--durability == 0) {
+
+      durability--;
+
+      if (durability == 0) {
         removeFromParent();
         return;
       }
+
+      // atualizar cor ao colidir
+      paint = Paint()
+        ..color = getBlockColor(durability)
+        ..style = PaintingStyle.fill;
     }
     super.onCollisionStart(intersectionPoints, other);
   }
