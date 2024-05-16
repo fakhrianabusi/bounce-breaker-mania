@@ -63,6 +63,17 @@ class GameBlocks extends RectangleComponent
     }
   }
 
+  Sprite selecSpritebyPowerUpType(PowerUpType type) {
+    switch (type) {
+      case PowerUpType.ballCount:
+        return gameRef.ballCount.sprite!;
+      case PowerUpType.stickSize:
+        return gameRef.stickSize.sprite!;
+      case PowerUpType.ballSpeed:
+        return gameRef.ballSpeed.sprite!;
+    }
+  }
+
   @override
   void onCollisionStart(
       Set<Vector2> intersectionPoints, PositionComponent other) {
@@ -85,7 +96,7 @@ class GameBlocks extends RectangleComponent
             seconds: random.nextInt(10) + 7); // 7 a 16 segundos de duração
 
         final powerUp = PowerUp(
-          sprite: game.power.sprite!,
+          sprite: selecSpritebyPowerUpType(selectedType),
           height: 60,
           width: 60,
           position: position.clone(),

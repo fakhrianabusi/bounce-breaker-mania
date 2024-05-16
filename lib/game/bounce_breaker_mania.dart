@@ -22,7 +22,9 @@ class BounceBreaker extends FlameGame
         );
   final ValueNotifier<int> score = ValueNotifier<int>(0);
   final rand = math.Random();
-  late SpriteComponent power;
+  late SpriteComponent ballCount;
+  late SpriteComponent stickSize;
+  late SpriteComponent ballSpeed;
   double get width => size.x;
   double get height => size.y;
   int get getDurability => rand.nextInt(2) + 1;
@@ -35,12 +37,28 @@ class BounceBreaker extends FlameGame
 
   @override
   Future<void> onLoad() async {
-    final powerUpSprite = await loadSprite('power.png');
-    power = SpriteComponent(
-      sprite: powerUpSprite,
+    final powerUpSprite1 = await loadSprite('ball_count.png');
+    final powerUpSprite2 = await loadSprite('stick_size.png');
+    final powerUpSprite3 = await loadSprite('ball_speed.png');
+
+    ballCount = SpriteComponent(
+      sprite: powerUpSprite1,
       size: Vector2.all(30),
       anchor: Anchor.center,
     );
+
+    stickSize = SpriteComponent(
+      sprite: powerUpSprite2,
+      size: Vector2.all(30),
+      anchor: Anchor.center,
+    );
+
+    ballSpeed = SpriteComponent(
+      sprite: powerUpSprite3,
+      size: Vector2.all(30),
+      anchor: Anchor.center,
+    );
+
     FlameAudio.bgm.play('arcade.mp3', volume: 0.5);
 
     camera.viewfinder.anchor = Anchor.topLeft;
