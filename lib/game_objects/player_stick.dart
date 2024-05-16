@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:bounce_breaker/configuration/constants.dart';
 import 'package:bounce_breaker/game_objects/ball.dart';
+import 'package:bounce_breaker/game_objects/extra_ball_power.dart';
 import 'package:bounce_breaker/game_objects/power_up.dart';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
@@ -84,7 +85,9 @@ class PlayerStick extends PositionComponent
     });
   }
 
-  void onPowerUp(PowerUp powerUp) {
+  void onPowerUp(PowerUp powerUp) async {
+    final powerSprite = Sprite.load('power.png');
+
     switch (powerUp.type) {
       case PowerUpType.stickSize:
         if (powerUp.duration.inSeconds > 0) {
@@ -109,17 +112,17 @@ class PlayerStick extends PositionComponent
         break;
       case PowerUpType.ballCount:
         if (powerUp.duration.inSeconds > 0) {
-          game.add(Ball(
+          game.add(ExtraBall(
             difficultyModifier: difficultyModifier,
-            radius: ballRadius,
+            radius: Vector2.all(40),
             position: position + Vector2(0, -30),
             velocity: Vector2(0, -game.height / 4),
           ));
           Future.delayed(powerUp.duration, removeExtraBalls);
         } else {
-          game.add(Ball(
+          game.add(ExtraBall(
             difficultyModifier: difficultyModifier,
-            radius: ballRadius,
+            radius: Vector2.all(40),
             position: position + Vector2(0, -30),
             velocity: Vector2(0, -game.height / 4),
           ));

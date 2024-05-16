@@ -1,32 +1,34 @@
 import 'dart:math';
 
+import 'package:bounce_breaker/game_objects/block.dart';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
-import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
 
 import '../configuration/screen.dart';
 import '../game/bounce_breaker_mania.dart';
-import 'block.dart';
 import 'player_stick.dart';
 
-class Ball extends CircleComponent
+class ExtraBall extends RectangleComponent
     with CollisionCallbacks, HasGameRef<BounceBreaker> {
-  Ball({
+  ExtraBall({
     required this.velocity,
     required super.position,
-    required double radius,
+    required this.radius,
     required this.difficultyModifier,
   }) : super(
-          radius: radius,
+          size: radius,
           anchor: Anchor.center,
           paint: Paint()
-            ..color = const Color.fromARGB(255, 255, 0, 157)
+            ..color = const Color.fromARGB(255, 255, 255, 255)
             ..style = PaintingStyle.fill,
           children: [CircleHitbox()],
         );
+
   Vector2 velocity;
+  Vector2 radius;
+
   final double difficultyModifier;
 
   final Map<int, Trail> _trails = {};
@@ -68,8 +70,7 @@ class Ball extends CircleComponent
         add(RemoveEffect(
           delay: 0.35,
         ));
-        FlameAudio.bgm.stop();
-        gameOver();
+        removeFromParent();
       }
     } else if (other is PlayerStick) {
       velocity.y = -velocity.y;
@@ -95,7 +96,12 @@ class Trail extends Component {
       : _paths = [Path()..moveTo(origin.x, origin.y)],
         _opacity = [1],
         _lastPoint = origin.clone(),
-        _color = const Color.fromARGB(255, 255, 0, 155);
+        _color = Color.fromARGB(
+          255,
+          Random().nextInt(256),
+          Random().nextInt(256),
+          Random().nextInt(256),
+        );
 
   final List<Path> _paths;
   final List<double> _opacity;
