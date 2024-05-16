@@ -1,3 +1,8 @@
+import 'dart:developer';
+
+import 'package:bounce_breaker/configuration/constants.dart';
+import 'package:bounce_breaker/game_objects/ball.dart';
+import 'package:bounce_breaker/game_objects/power_up.dart';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
@@ -7,7 +12,7 @@ import 'package:flutter/material.dart';
 import '../game/bounce_breaker_mania.dart';
 
 class PlayerStick extends PositionComponent
-    with DragCallbacks, HasGameReference<BounceBreaker> {
+    with DragCallbacks, HasGameRef<BounceBreaker> {
   PlayerStick({
     required this.cornerRadius,
     required super.position,
@@ -22,6 +27,18 @@ class PlayerStick extends PositionComponent
   final _paint = Paint()
     ..color = const Color(0xffffffff)
     ..style = PaintingStyle.fill;
+
+  @override
+  void update(double dt) {
+    super.update(dt);
+    gameRef.world.children.whereType<PowerUp>().forEach((powerUp) {
+      if (powerUp.toRect().overlaps(toRect())) {
+        log('PowerUp collected: $powerUp');
+        onPowerUp(powerUp);
+        powerUp.removeFromParent();
+      }
+    });
+  }
 
   @override
   void render(Canvas canvas) {
@@ -49,5 +66,27 @@ class PlayerStick extends PositionComponent
 
   void setPositionX(double newX) {
     position.x = newX.clamp(0, game.width);
+  }
+
+  void onPowerUp(PowerUp powerUp) {
+    switch (powerUp.type) {
+      case PowerUpType.stickSize:
+        size = Vector2(playerStickWidth * 1.5, playerStickHeight);
+
+        break;
+      case PowerUpType.ballSpeed:
+        game.children.whereType<Ball>().forEach((ball) {
+          ball.velocity *= 1.5;
+        });
+        break;
+      case PowerUpType.ballCount:
+        game.add(Ball(
+          difficultyModifier: difficultyModifier,
+          radius: ballRadius,
+          position: position + Vector2(0, -30),
+          velocity: Vector2(0, -game.height / 4),
+        ));
+        break;
+    }
   }
 }

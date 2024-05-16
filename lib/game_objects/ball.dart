@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
-import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
 
 import '../configuration/screen.dart';
@@ -26,7 +25,7 @@ class Ball extends CircleComponent
             ..style = PaintingStyle.fill,
           children: [CircleHitbox()],
         );
-  final Vector2 velocity;
+  Vector2 velocity;
   final double difficultyModifier;
 
   final Map<int, Trail> _trails = {};
@@ -68,8 +67,8 @@ class Ball extends CircleComponent
         add(RemoveEffect(
           delay: 0.35,
         ));
-        FlameAudio.bgm.stop();
-        gameOver();
+        //FlameAudio.bgm.stop();
+        //gameOver();
       }
     } else if (other is PlayerStick) {
       velocity.y = -velocity.y;
