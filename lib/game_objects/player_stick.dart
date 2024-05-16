@@ -86,8 +86,6 @@ class PlayerStick extends PositionComponent
   }
 
   void onPowerUp(PowerUp powerUp) async {
-    final powerSprite = Sprite.load('power.png');
-
     switch (powerUp.type) {
       case PowerUpType.stickSize:
         if (powerUp.duration.inSeconds > 0) {
