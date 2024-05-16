@@ -33,7 +33,7 @@ class PlayerStick extends PositionComponent
     super.update(dt);
     gameRef.world.children.whereType<PowerUp>().forEach((powerUp) {
       if (powerUp.toRect().overlaps(toRect())) {
-        log('PowerUp collected: $powerUp');
+        log('type: ${powerUp.type} duration: ${powerUp.duration}');
         onPowerUp(powerUp);
         powerUp.removeFromParent();
       }
@@ -68,24 +68,62 @@ class PlayerStick extends PositionComponent
     position.x = newX.clamp(0, game.width);
   }
 
+  void resetSize() {
+    size = Vector2(playerStickWidth, playerStickHeight);
+  }
+
+  void resetSpeed() {
+    game.children.whereType<Ball>().forEach((ball) {
+      ball.velocity /= 1.5;
+    });
+  }
+
+  void removeExtraBalls() {
+    game.children.whereType<Ball>().forEach((ball) {
+      ball.removeFromParent();
+    });
+  }
+
   void onPowerUp(PowerUp powerUp) {
     switch (powerUp.type) {
       case PowerUpType.stickSize:
-        size = Vector2(playerStickWidth * 1.5, playerStickHeight);
+        if (powerUp.duration.inSeconds > 0) {
+          size = Vector2(playerStickWidth * 2, playerStickHeight);
+          Future.delayed(powerUp.duration, resetSize);
+        } else {
+          size = Vector2(playerStickWidth * 2, playerStickHeight);
+        }
 
         break;
       case PowerUpType.ballSpeed:
-        game.children.whereType<Ball>().forEach((ball) {
-          ball.velocity *= 1.5;
-        });
+        if (powerUp.duration.inSeconds > 0) {
+          game.children.whereType<Ball>().forEach((ball) {
+            ball.velocity *= 1.5;
+          });
+          Future.delayed(powerUp.duration, resetSpeed);
+        } else {
+          game.children.whereType<Ball>().forEach((ball) {
+            ball.velocity *= 1.5;
+          });
+        }
         break;
       case PowerUpType.ballCount:
-        game.add(Ball(
-          difficultyModifier: difficultyModifier,
-          radius: ballRadius,
-          position: position + Vector2(0, -30),
-          velocity: Vector2(0, -game.height / 4),
-        ));
+        if (powerUp.duration.inSeconds > 0) {
+          game.add(Ball(
+            difficultyModifier: difficultyModifier,
+            radius: ballRadius,
+            position: position + Vector2(0, -30),
+            velocity: Vector2(0, -game.height / 4),
+          ));
+          Future.delayed(powerUp.duration, removeExtraBalls);
+        } else {
+          game.add(Ball(
+            difficultyModifier: difficultyModifier,
+            radius: ballRadius,
+            position: position + Vector2(0, -30),
+            velocity: Vector2(0, -game.height / 4),
+          ));
+        }
         break;
     }
   }

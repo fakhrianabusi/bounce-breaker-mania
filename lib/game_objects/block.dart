@@ -80,7 +80,7 @@ class GameBlocks extends RectangleComponent
         ];
         final selectedType = powerUpTypes[random.nextInt(powerUpTypes.length)];
         final powerUpDuration = Duration(
-            seconds: random.nextInt(4) + 5); // Duração entre 5 e 14 segundos
+            seconds: random.nextInt(10) + 7); // 7 a 16 segundos de duração
 
         final powerUp = PowerUp(
           height: 20,
