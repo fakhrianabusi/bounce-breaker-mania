@@ -5,13 +5,14 @@ import 'package:flutter/material.dart';
 
 enum PowerUpType { stickSize, ballSpeed, ballCount }
 
-class PowerUp extends RectangleComponent
+class PowerUp extends SpriteComponent
     with CollisionCallbacks, HasGameRef<BounceBreaker> {
   final PowerUpType type;
   final Duration duration;
   PowerUp({
     required this.velocity,
     required super.position,
+    required Sprite sprite,
     required double width,
     required double height,
     required this.type,
@@ -23,6 +24,7 @@ class PowerUp extends RectangleComponent
             ..color = const Color.fromARGB(255, 255, 0, 157)
             ..style = PaintingStyle.fill,
           children: [RectangleHitbox()],
+          sprite: sprite,
         );
   final Vector2 velocity;
 

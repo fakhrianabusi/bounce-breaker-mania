@@ -85,8 +85,9 @@ class GameBlocks extends RectangleComponent
             seconds: random.nextInt(10) + 7); // 7 a 16 segundos de duração
 
         final powerUp = PowerUp(
-          height: 20,
-          width: 20,
+          sprite: game.power.sprite!,
+          height: 60,
+          width: 60,
           position: position.clone(),
           velocity: Vector2(0, 100),
           type: selectedType,
