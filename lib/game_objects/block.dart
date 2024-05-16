@@ -72,6 +72,8 @@ class GameBlocks extends RectangleComponent
       durability--;
 
       if (durability == 0) {
+        game.score.value += 10;
+        debugPrint(game.score.value.toString());
         final random = Random();
         final powerUpTypes = [
           PowerUpType.ballCount,

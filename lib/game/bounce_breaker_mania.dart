@@ -13,17 +13,21 @@ import '../game_objects/block.dart';
 import '../game_objects/player_stick.dart';
 import '../game_objects/swipe_controls.dart';
 
-class BounceBreaker extends FlameGame with HasCollisionDetection, DragCallbacks {
+class BounceBreaker extends FlameGame
+    with HasCollisionDetection, DragCallbacks {
   BounceBreaker()
       : super(
-          camera: CameraComponent.withFixedResolution(width: screenWidth, height: screenHeight),
+          camera: CameraComponent.withFixedResolution(
+              width: screenWidth, height: screenHeight),
         );
+  final ValueNotifier<int> score = ValueNotifier<int>(0);
   final rand = math.Random();
   double get width => size.x;
   double get height => size.y;
   int get getDurability => rand.nextInt(2) + 1;
   double get brickSize {
-    const totalPadding = (GameConstants.noBricksInRow + 1) * GameConstants.brickPadding;
+    const totalPadding =
+        (GameConstants.noBricksInRow + 1) * GameConstants.brickPadding;
     final screenMinSize = size.x < size.y ? size.x : size.y;
     return (screenMinSize - totalPadding) / GameConstants.noBricksInRow;
   } // Calculate the size of the bricks based on the screen size
@@ -39,7 +43,9 @@ class BounceBreaker extends FlameGame with HasCollisionDetection, DragCallbacks 
         difficultyModifier: difficultyModifier,
         radius: ballRadius,
         position: size / 2,
-        velocity: Vector2((rand.nextDouble() - 0.5) * width, height * 0.2).normalized()..scale(height / 4)));
+        velocity: Vector2((rand.nextDouble() - 0.5) * width, height * 0.2)
+            .normalized()
+          ..scale(height / 4)));
     world.add(PlayerStick(
         size: Vector2(playerStickWidth, playerStickHeight),
         cornerRadius: const Radius.circular(ballRadius / 2),
@@ -59,8 +65,10 @@ class BounceBreaker extends FlameGame with HasCollisionDetection, DragCallbacks 
           durability: durability,
           size: brickSize,
         )..position = Vector2(
-              col * (brickSize + GameConstants.brickPadding) + GameConstants.brickPadding,
-              row * (brickSize + GameConstants.brickPadding) + GameConstants.brickPadding * 2,
+              col * (brickSize + GameConstants.brickPadding) +
+                  GameConstants.brickPadding,
+              row * (brickSize + GameConstants.brickPadding) +
+                  GameConstants.brickPadding * 2,
             ) +
             Vector2(0, height * 0.1); // Offset of the bricks from the top
         world.add(gameBlock);
