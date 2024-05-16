@@ -25,3 +25,10 @@ final Map<int, Color> blockColors = {
   2: Colors.green,
   3: Colors.blue,
 };
+
+enum GameStatus {
+  start,
+  play,
+  pause,
+  gameOver,
+}
