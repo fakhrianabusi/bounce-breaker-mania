@@ -23,13 +23,13 @@ class PauseMenu extends StatelessWidget {
                 gameRef.overlays.remove(PauseMenu.id);
                 FlameAudio.bgm.resume();
               },
-              child: const Text('Continuar'),
+              child: const Text('Continuar', style: TextStyle(fontFamily: 'Press Start 2P')),
             ),
             ElevatedButton(
               onPressed: () {
                 print('hello');
               },
-              child: const Text('Exit'),
+              child: const Text('Exit', style: TextStyle(fontFamily: 'Press Start 2P')),
             ),
           ],
         ),

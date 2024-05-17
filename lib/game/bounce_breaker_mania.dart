@@ -16,8 +16,7 @@ import '../game_objects/swipe_controls.dart';
 
 enum GameStatus { initial, playing, paused, nextLevel, gameOver }
 
-class BounceBreaker extends FlameGame
-    with HasCollisionDetection, DragCallbacks, TapDetector {
+class BounceBreaker extends FlameGame with HasCollisionDetection, DragCallbacks, TapDetector {
   BounceBreaker()
       : super(
           camera: CameraComponent.withFixedResolution(
@@ -34,11 +33,16 @@ class BounceBreaker extends FlameGame
   double get height => size.y;
   int get getDurability => rand.nextInt(2) + 1;
   double get brickSize {
-    const totalPadding =
-        (GameConstants.noBricksInRow + 1) * GameConstants.brickPadding;
+    const totalPadding = (GameConstants.noBricksInRow + 1) * GameConstants.brickPadding;
     final screenMinSize = size.x < size.y ? size.x : size.y;
     return (screenMinSize - totalPadding) / GameConstants.noBricksInRow;
   } // Calculate the size of the bricks based on the screen size
+
+  Future<void> reset() async {
+    FlameAudio.bgm.stop();
+    FlameAudio.bgm.play('arcade.mp3', volume: 0.5);
+    await onStarGame();
+  }
 
   //GameState handling
 
@@ -60,15 +64,7 @@ class BounceBreaker extends FlameGame
     }
   }
 
-  @override
-  Future<void> onLoad() async {
-    super.onLoad();
-    camera.viewfinder.anchor = Anchor.topLeft;
-    world.add(Screen());
-    gameState = GameStatus.initial;
-  }
-
-  void onStarGame() async {
+  Future<void> onStarGame() async {
     if (gameState == GameStatus.playing) return;
 
     world.removeAll(world.children.query<GameBlocks>());
@@ -102,14 +98,13 @@ class BounceBreaker extends FlameGame
       anchor: Anchor.center,
     );
 
+    FlameAudio.bgm.stop();
     FlameAudio.bgm.play('arcade.mp3', volume: 0.5);
     world.add(Ball(
         difficultyModifier: difficultyModifier,
         radius: ballRadius,
         position: size / 2,
-        velocity: Vector2((rand.nextDouble() - 0.5) * width, height * 0.2)
-            .normalized()
-          ..scale(height / 4)));
+        velocity: Vector2((rand.nextDouble() - 0.5) * width, height * 0.2).normalized()..scale(height / 4)));
     world.add(PlayerStick(
         size: Vector2(playerStickWidth, playerStickHeight),
         cornerRadius: const Radius.circular(ballRadius / 2),
@@ -136,10 +131,8 @@ class BounceBreaker extends FlameGame
           durability: durability,
           size: brickSize,
         )..position = Vector2(
-              col * (brickSize + GameConstants.brickPadding) +
-                  GameConstants.brickPadding,
-              row * (brickSize + GameConstants.brickPadding) +
-                  GameConstants.brickPadding * 2,
+              col * (brickSize + GameConstants.brickPadding) + GameConstants.brickPadding,
+              row * (brickSize + GameConstants.brickPadding) + GameConstants.brickPadding * 2,
             ) +
             Vector2(0, height * 0.1); // Offset of the bricks from the top
         world.add(gameBlock);
@@ -151,5 +144,13 @@ class BounceBreaker extends FlameGame
   void onTap() {
     super.onTap();
     onStarGame();
+  }
+
+  @override
+  Future<void> onLoad() async {
+    super.onLoad();
+    camera.viewfinder.anchor = Anchor.topLeft;
+    world.add(Screen());
+    gameState = GameStatus.initial;
   }
 }

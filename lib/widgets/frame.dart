@@ -1,4 +1,5 @@
 import 'package:bounce_breaker/configuration/constants.dart';
+import 'package:bounce_breaker/custom_widgets/game_over_menu.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -28,8 +29,7 @@ class _FrameState extends State<Frame> {
         home: Scaffold(
       body: Container(
         decoration: const BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage('assets/images/bg.png'), fit: BoxFit.cover),
+          image: DecorationImage(image: AssetImage('assets/images/bg.png'), fit: BoxFit.cover),
         ),
         child: SafeArea(
           child: Padding(
@@ -54,17 +54,13 @@ class _FrameState extends State<Frame> {
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 32,
-                                    fontFamily:
-                                        GoogleFonts.orbitron().fontFamily,
+                                    fontFamily: GoogleFonts.orbitron().fontFamily,
                                   ),
                                 ),
                               ),
-                          PauseButton.id:
-                              (BuildContext ctx, BounceBreaker gameRef) =>
-                                  PauseButton(gameRef: gameRef),
-                          PauseMenu.id:
-                              (BuildContext ctx, BounceBreaker gameRef) =>
-                                  PauseMenu(gameRef: gameRef),
+                          PauseButton.id: (BuildContext ctx, BounceBreaker gameRef) => PauseButton(gameRef: gameRef),
+                          PauseMenu.id: (BuildContext ctx, BounceBreaker gameRef) => PauseMenu(gameRef: gameRef),
+                          GameOverMenu.id: (BuildContext ctx, BounceBreaker gameRef) => GameOverMenu(gameRef: gameRef),
                         },
                       ),
                     ),
