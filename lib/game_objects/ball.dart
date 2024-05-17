@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:bounce_breaker/custom_widgets/game_over_menu.dart';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
@@ -11,8 +12,7 @@ import '../game/bounce_breaker_mania.dart';
 import 'block.dart';
 import 'player_stick.dart';
 
-class Ball extends CircleComponent
-    with CollisionCallbacks, HasGameRef<BounceBreaker> {
+class Ball extends CircleComponent with CollisionCallbacks, HasGameRef<BounceBreaker> {
   Ball({
     required this.velocity,
     required super.position,
@@ -50,11 +50,15 @@ class Ball extends CircleComponent
     gameRef.world.children.whereType<GameBlocks>().forEach((element) {
       element.removeFromParent();
     });
+    FlameAudio.play('game_over.mp3');
+    Future.delayed(const Duration(seconds: 2)).then((_) {
+      FlameAudio.bgm.play('game_over_drama.mp3');
+    });
+    gameRef.overlays.add(GameOverMenu.id);
   }
 
   @override
-  void onCollisionStart(
-      Set<Vector2> intersectionPoints, PositionComponent other) {
+  void onCollisionStart(Set<Vector2> intersectionPoints, PositionComponent other) {
     super.onCollisionStart(intersectionPoints, other);
     if (other is Screen) {
       if (intersectionPoints.first.y <= 0) {
@@ -73,8 +77,7 @@ class Ball extends CircleComponent
       }
     } else if (other is PlayerStick) {
       velocity.y = -velocity.y;
-      velocity.x = velocity.x +
-          (position.x - other.position.x) / other.size.x * game.width * 0.3;
+      velocity.x = velocity.x + (position.x - other.position.x) / other.size.x * game.width * 0.3;
     } else if (other is GameBlocks) {
       if (position.y < other.position.y - other.size.y / 2) {
         velocity.y = -velocity.y;
