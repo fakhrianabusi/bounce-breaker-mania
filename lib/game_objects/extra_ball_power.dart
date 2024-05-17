@@ -10,24 +10,28 @@ import '../configuration/screen.dart';
 import '../game/bounce_breaker_mania.dart';
 import 'player_stick.dart';
 
-class ExtraBall extends RectangleComponent
+class ExtraBall extends CircleComponent
     with CollisionCallbacks, HasGameRef<BounceBreaker> {
   ExtraBall({
     required this.velocity,
     required super.position,
-    required this.radius,
+    required double radius,
     required this.difficultyModifier,
   }) : super(
-          size: radius,
+          radius: radius,
           anchor: Anchor.center,
           paint: Paint()
-            ..color = const Color.fromARGB(255, 255, 255, 255)
+            ..color = Color.fromARGB(
+              255,
+              Random().nextInt(256),
+              Random().nextInt(256),
+              Random().nextInt(256),
+            )
             ..style = PaintingStyle.fill,
           children: [CircleHitbox()],
         );
 
   Vector2 velocity;
-  Vector2 radius;
 
   final double difficultyModifier;
 

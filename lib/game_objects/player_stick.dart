@@ -99,28 +99,28 @@ class PlayerStick extends PositionComponent
       case PowerUpType.ballSpeed:
         if (powerUp.duration.inSeconds > 0) {
           game.children.whereType<Ball>().forEach((ball) {
-            ball.velocity *= 1.5;
+            ball.velocity.setFrom(ball.velocity * 2.5);
           });
           Future.delayed(powerUp.duration, resetSpeed);
         } else {
           game.children.whereType<Ball>().forEach((ball) {
-            ball.velocity *= 1.5;
+            ball.velocity.setFrom(ball.velocity * 2.5);
           });
         }
         break;
       case PowerUpType.ballCount:
         if (powerUp.duration.inSeconds > 0) {
-          game.add(ExtraBall(
+          game.world.add(ExtraBall(
             difficultyModifier: difficultyModifier,
-            radius: Vector2.all(40),
+            radius: ballRadius,
             position: position + Vector2(0, -30),
             velocity: Vector2(0, -game.height / 4),
           ));
           Future.delayed(powerUp.duration, removeExtraBalls);
         } else {
-          game.add(ExtraBall(
+          game.world.add(ExtraBall(
             difficultyModifier: difficultyModifier,
-            radius: Vector2.all(40),
+            radius: ballRadius,
             position: position + Vector2(0, -30),
             velocity: Vector2(0, -game.height / 4),
           ));
