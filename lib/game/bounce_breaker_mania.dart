@@ -1,5 +1,6 @@
 import 'dart:math' as math;
 
+import 'package:bounce_breaker/game_objects/extra_ball_power.dart';
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
@@ -13,12 +14,16 @@ import '../game_objects/block.dart';
 import '../game_objects/player_stick.dart';
 import '../game_objects/swipe_controls.dart';
 
+enum GameStatus { initial, playing, paused, nextLevel, gameOver }
+
 class BounceBreaker extends FlameGame
-    with HasCollisionDetection, DragCallbacks {
+    with HasCollisionDetection, DragCallbacks, TapDetector {
   BounceBreaker()
       : super(
           camera: CameraComponent.withFixedResolution(
-              width: screenWidth, height: screenHeight),
+            width: screenWidth,
+            height: screenHeight,
+          ),
         );
   final ValueNotifier<int> score = ValueNotifier<int>(0);
   final rand = math.Random();
@@ -35,8 +40,46 @@ class BounceBreaker extends FlameGame
     return (screenMinSize - totalPadding) / GameConstants.noBricksInRow;
   } // Calculate the size of the bricks based on the screen size
 
+  //GameState handling
+
+  late GameStatus _gameState;
+  GameStatus get gameState => _gameState;
+  set gameState(GameStatus status) {
+    _gameState = status;
+    switch (status) {
+      case GameStatus.initial:
+      case GameStatus.paused:
+      case GameStatus.gameOver:
+      case GameStatus.nextLevel:
+        overlays.add(status.name);
+      case GameStatus.playing:
+        overlays.remove(GameStatus.paused.name);
+        overlays.remove(GameStatus.gameOver.name);
+        overlays.remove(GameStatus.initial.name);
+        overlays.remove(GameStatus.nextLevel.name);
+    }
+  }
+
   @override
   Future<void> onLoad() async {
+    super.onLoad();
+    camera.viewfinder.anchor = Anchor.topLeft;
+    world.add(Screen());
+    gameState = GameStatus.initial;
+  }
+
+  void onStarGame() async {
+    if (gameState == GameStatus.playing) return;
+
+    world.removeAll(world.children.query<GameBlocks>());
+    world.removeAll(world.children.query<Ball>());
+    world.removeAll(world.children.query<PlayerStick>());
+    world.removeAll(world.children.query<SwipeControlArea>());
+    world.removeAll(world.children.query<ExtraBall>());
+
+    score.value = 0;
+    gameState = GameStatus.playing;
+
     final powerUpSprite1 = await loadSprite('ball_count.png');
     final powerUpSprite2 = await loadSprite('stick_size.png');
     final powerUpSprite3 = await loadSprite('ball_speed.png');
@@ -60,10 +103,6 @@ class BounceBreaker extends FlameGame
     );
 
     FlameAudio.bgm.play('arcade.mp3', volume: 0.5);
-
-    camera.viewfinder.anchor = Anchor.topLeft;
-    world.add(Screen());
-
     world.add(Ball(
         difficultyModifier: difficultyModifier,
         radius: ballRadius,
@@ -75,11 +114,18 @@ class BounceBreaker extends FlameGame
         size: Vector2(playerStickWidth, playerStickHeight),
         cornerRadius: const Radius.circular(ballRadius / 2),
         position: Vector2(width / 2, height * 0.65)));
-    world.add(SwipeControlArea(
-        target: world.children.query<PlayerStick>().first,
-        size: Vector2(screenWidth * 2, screenHeight * 0.3),
-        cornerRadius: const Radius.circular(ballRadius / 2),
-        position: Vector2(width / 2, height * 1.0)));
+
+    //FIX: The SwipeControlArea not working with tap detector
+    //We are using the onTap method to start the game
+    //and the SwipeControlArea is not working with the onTap method
+    //Maybe we can use the DragDetector to handle the swipe
+    //Or add a button to start the game
+
+    // world.add(SwipeControlArea(
+    //     target: world.children.query<PlayerStick>().first,
+    //     size: Vector2(screenWidth * 2, screenHeight * 0.3),
+    //     cornerRadius: const Radius.circular(ballRadius / 2),
+    //     position: Vector2(width / 2, height * 1.0)));
 
     for (var row = 0; row < 5; row++) {
       for (var col = 0; col < 10; col++) {
@@ -99,6 +145,11 @@ class BounceBreaker extends FlameGame
         world.add(gameBlock);
       }
     }
-    super.onLoad();
+  }
+
+  @override
+  void onTap() {
+    super.onTap();
+    onStarGame();
   }
 }

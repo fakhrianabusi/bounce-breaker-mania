@@ -8,7 +8,7 @@ import '../game/bounce_breaker_mania.dart';
 import 'player_stick.dart';
 
 class SwipeControlArea extends PositionComponent
-    with DragCallbacks, HasGameReference<BounceBreaker> {
+    with DragCallbacks, HasGameRef<BounceBreaker> {
   final PlayerStick target;
   SwipeControlArea({
     required this.target,

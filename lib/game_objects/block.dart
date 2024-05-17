@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:bounce_breaker/game_objects/extra_ball_power.dart';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
@@ -77,7 +78,7 @@ class GameBlocks extends RectangleComponent
   @override
   void onCollisionStart(
       Set<Vector2> intersectionPoints, PositionComponent other) {
-    if (other is Ball && !hasCollided) {
+    if (other is Ball || other is ExtraBall && !hasCollided) {
       hasCollided = true;
 
       durability--;

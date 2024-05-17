@@ -1,5 +1,7 @@
 import 'dart:math';
 
+import 'package:bounce_breaker/game_objects/extra_ball_power.dart';
+import 'package:bounce_breaker/game_objects/power_up.dart';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
@@ -50,6 +52,22 @@ class Ball extends CircleComponent
     gameRef.world.children.whereType<GameBlocks>().forEach((element) {
       element.removeFromParent();
     });
+    gameRef.world.children.whereType<Ball>().forEach((element) {
+      element.removeFromParent();
+    });
+    gameRef.world.children.whereType<PlayerStick>().forEach((element) {
+      element.removeFromParent();
+    });
+    gameRef.world.children.whereType<PowerUp>().forEach((element) {
+      element.removeFromParent();
+    });
+    gameRef.world.children.whereType<ExtraBall>().forEach((element) {
+      element.removeFromParent();
+    });
+    gameRef.world.children.whereType<Trail>().forEach((element) {
+      element.removeFromParent();
+    });
+    gameRef.score.value = 0;
   }
 
   @override

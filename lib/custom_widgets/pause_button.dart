@@ -15,16 +15,19 @@ class PauseButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Align(
-      alignment: Alignment.topCenter,
+      alignment: Alignment.topRight,
       child: Container(
-        margin: const EdgeInsets.only(top: 32),
+        margin: const EdgeInsets.only(top: 32, right: 32),
         child: IconButton(
           onPressed: () {
             gameRef.pauseEngine();
             FlameAudio.bgm.pause();
             gameRef.overlays.add(PauseMenu.id);
           },
-          icon: const Icon(Icons.pause),
+          icon: const Icon(
+            Icons.pause,
+            size: 48,
+          ),
           color: Colors.white,
         ),
       ),
