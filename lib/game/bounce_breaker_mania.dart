@@ -29,9 +29,13 @@ class BounceBreaker extends FlameGame with HasCollisionDetection, DragCallbacks,
   late SpriteComponent ballCount;
   late SpriteComponent stickSize;
   late SpriteComponent ballSpeed;
+
   double get width => size.x;
+
   double get height => size.y;
+
   int get getDurability => rand.nextInt(2) + 1;
+
   double get brickSize {
     const totalPadding = (GameConstants.noBricksInRow + 1) * GameConstants.brickPadding;
     final screenMinSize = size.x < size.y ? size.x : size.y;
@@ -41,7 +45,46 @@ class BounceBreaker extends FlameGame with HasCollisionDetection, DragCallbacks,
   Future<void> reset() async {
     FlameAudio.bgm.stop();
     FlameAudio.bgm.play('arcade.mp3', volume: 0.5);
-    await onStarGame();
+
+    world.add(_buildBall());
+
+    world.add(_buildPlayerStick());
+
+    for (var row = 0; row < 5; row++) {
+      for (var col = 0; col < 10; col++) {
+        int durability = getDurability;
+        world.add(_buildGameBlock(row, col, durability));
+      }
+    }
+  }
+
+  GameBlocks _buildGameBlock(int row, int col, int durability) {
+    return GameBlocks(
+      color: GameBlocks.getBlockColor(durability),
+      durability: durability,
+      size: brickSize,
+    )..position = Vector2(
+          col * (brickSize + GameConstants.brickPadding) + GameConstants.brickPadding,
+          row * (brickSize + GameConstants.brickPadding) + GameConstants.brickPadding * 2,
+        ) +
+        Vector2(0, height * 0.1); // Offset of the bricks from the top
+  }
+
+  PlayerStick _buildPlayerStick() {
+    return PlayerStick(
+      size: Vector2(playerStickWidth, playerStickHeight),
+      cornerRadius: const Radius.circular(ballRadius / 2),
+      position: Vector2(width / 2, height * 0.65),
+    );
+  }
+
+  Ball _buildBall() {
+    return Ball(
+      difficultyModifier: difficultyModifier,
+      radius: ballRadius,
+      position: size / 2,
+      velocity: Vector2((rand.nextDouble() - 0.5) * width, height * 0.2).normalized()..scale(height / 4),
+    );
   }
 
   //GameState handling
@@ -100,15 +143,8 @@ class BounceBreaker extends FlameGame with HasCollisionDetection, DragCallbacks,
 
     FlameAudio.bgm.stop();
     FlameAudio.bgm.play('arcade.mp3', volume: 0.5);
-    world.add(Ball(
-        difficultyModifier: difficultyModifier,
-        radius: ballRadius,
-        position: size / 2,
-        velocity: Vector2((rand.nextDouble() - 0.5) * width, height * 0.2).normalized()..scale(height / 4)));
-    world.add(PlayerStick(
-        size: Vector2(playerStickWidth, playerStickHeight),
-        cornerRadius: const Radius.circular(ballRadius / 2),
-        position: Vector2(width / 2, height * 0.65)));
+    world.add(_buildBall());
+    world.add(_buildPlayerStick());
 
     //FIX: The SwipeControlArea not working with tap detector
     //We are using the onTap method to start the game
@@ -125,17 +161,7 @@ class BounceBreaker extends FlameGame with HasCollisionDetection, DragCallbacks,
     for (var row = 0; row < 5; row++) {
       for (var col = 0; col < 10; col++) {
         int durability = getDurability;
-
-        final gameBlock = GameBlocks(
-          color: GameBlocks.getBlockColor(durability),
-          durability: durability,
-          size: brickSize,
-        )..position = Vector2(
-              col * (brickSize + GameConstants.brickPadding) + GameConstants.brickPadding,
-              row * (brickSize + GameConstants.brickPadding) + GameConstants.brickPadding * 2,
-            ) +
-            Vector2(0, height * 0.1); // Offset of the bricks from the top
-        world.add(gameBlock);
+        world.add(_buildGameBlock(row, col, durability));
       }
     }
   }
