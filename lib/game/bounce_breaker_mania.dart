@@ -47,8 +47,9 @@ class BounceBreaker extends FlameGame with HasCollisionDetection, DragCallbacks 
     FlameAudio.bgm.play('arcade.mp3', volume: 0.5);
 
     world.add(_buildBall());
-
-    world.add(_buildPlayerStick());
+    _buildPlayerStick().forEach((component) {
+      world.add(component);
+    });
 
     for (var row = 0; row < 5; row++) {
       for (var col = 0; col < 10; col++) {
@@ -70,12 +71,21 @@ class BounceBreaker extends FlameGame with HasCollisionDetection, DragCallbacks 
         Vector2(0, height * 0.1); // Offset of the bricks from the top
   }
 
-  PlayerStick _buildPlayerStick() {
-    return PlayerStick(
-      size: Vector2(playerStickWidth, playerStickHeight),
-      cornerRadius: const Radius.circular(ballRadius / 2),
+  List<Component> _buildPlayerStick() {
+    final stick = PlayerStick(
+      size: Vector2(width / 4, height / 40),
       position: Vector2(width / 2, height * 0.65),
+      cornerRadius: const Radius.circular(ballRadius / 2),
     );
+
+    final swipeControl = SwipeControlArea(
+      target: stick,
+      cornerRadius: const Radius.circular(20),
+      size: Vector2(screenWidth * 2, screenHeight * 0.3),
+      position: Vector2(width / 2, height * 1.0),
+    );
+
+    return [stick, swipeControl];
   }
 
   Ball _buildBall() {
@@ -144,13 +154,9 @@ class BounceBreaker extends FlameGame with HasCollisionDetection, DragCallbacks 
     FlameAudio.bgm.stop();
     FlameAudio.bgm.play('arcade.mp3', volume: 0.5);
     world.add(_buildBall());
-    world.add(_buildPlayerStick());
-
-    world.add(SwipeControlArea(
-        target: world.children.query<PlayerStick>().first,
-        size: Vector2(screenWidth * 2, screenHeight * 0.3),
-        cornerRadius: const Radius.circular(ballRadius / 2),
-        position: Vector2(width / 2, height * 1.0)));
+    _buildPlayerStick().forEach((component) {
+      world.add(component);
+    });
 
     for (var row = 0; row < 5; row++) {
       for (var col = 0; col < 10; col++) {
