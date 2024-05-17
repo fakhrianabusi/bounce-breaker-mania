@@ -34,7 +34,30 @@ class BounceBreaker extends FlameGame with HasCollisionDetection, DragCallbacks 
 
   Future<void> reset() async {
     FlameAudio.bgm.stop();
-    await onLoad();
+    FlameAudio.bgm.play('arcade.mp3', volume: 0.5);
+
+    world.add(Ball(
+        difficultyModifier: difficultyModifier,
+        radius: ballRadius,
+        position: size / 2,
+        velocity: Vector2((rand.nextDouble() - 0.5) * width, height * 0.2).normalized()..scale(height / 4)));
+
+    for (var row = 0; row < 5; row++) {
+      for (var col = 0; col < 10; col++) {
+        int durability = getDurability;
+
+        final gameBlock = GameBlocks(
+          color: GameBlocks.getBlockColor(durability),
+          durability: durability,
+          size: brickSize,
+        )..position = Vector2(
+              col * (brickSize + GameConstants.brickPadding) + GameConstants.brickPadding,
+              row * (brickSize + GameConstants.brickPadding) + GameConstants.brickPadding * 2,
+            ) +
+            Vector2(0, height * 0.1);
+        world.add(gameBlock);
+      }
+    }
   }
 
   @override
@@ -61,6 +84,7 @@ class BounceBreaker extends FlameGame with HasCollisionDetection, DragCallbacks 
       anchor: Anchor.center,
     );
 
+    FlameAudio.bgm.stop();
     FlameAudio.bgm.play('arcade.mp3', volume: 0.5);
 
     camera.viewfinder.anchor = Anchor.topLeft;

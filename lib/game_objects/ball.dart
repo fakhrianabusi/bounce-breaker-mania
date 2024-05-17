@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:bounce_breaker/custom_widgets/game_over_menu.dart';
+import 'package:bounce_breaker/game_objects/power_up.dart';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
@@ -45,15 +46,15 @@ class Ball extends CircleComponent with CollisionCallbacks, HasGameRef<BounceBre
   }
 
   gameOver() {
-    position = Vector2(game.width / 2, game.height / 2);
-    velocity.setValues(0, 0);
+    removeFromParent();
     gameRef.world.children.whereType<GameBlocks>().forEach((element) {
       element.removeFromParent();
     });
-    FlameAudio.play('game_over.mp3');
-    Future.delayed(const Duration(seconds: 2)).then((_) {
-      FlameAudio.bgm.play('game_over_drama.mp3');
+    gameRef.world.children.whereType<PowerUp>().forEach((element) {
+      element.removeFromParent();
     });
+    FlameAudio.play('game_over.mp3');
+    FlameAudio.bgm.play('game_over_drama.mp3');
     gameRef.overlays.add(GameOverMenu.id);
   }
 
