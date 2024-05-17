@@ -16,7 +16,7 @@ import '../game_objects/swipe_controls.dart';
 
 enum GameStatus { initial, playing, paused, nextLevel, gameOver }
 
-class BounceBreaker extends FlameGame with HasCollisionDetection, DragCallbacks, TapDetector {
+class BounceBreaker extends FlameGame with HasCollisionDetection, DragCallbacks {
   BounceBreaker()
       : super(
           camera: CameraComponent.withFixedResolution(
@@ -146,17 +146,11 @@ class BounceBreaker extends FlameGame with HasCollisionDetection, DragCallbacks,
     world.add(_buildBall());
     world.add(_buildPlayerStick());
 
-    //FIX: The SwipeControlArea not working with tap detector
-    //We are using the onTap method to start the game
-    //and the SwipeControlArea is not working with the onTap method
-    //Maybe we can use the DragDetector to handle the swipe
-    //Or add a button to start the game
-
-    // world.add(SwipeControlArea(
-    //     target: world.children.query<PlayerStick>().first,
-    //     size: Vector2(screenWidth * 2, screenHeight * 0.3),
-    //     cornerRadius: const Radius.circular(ballRadius / 2),
-    //     position: Vector2(width / 2, height * 1.0)));
+    world.add(SwipeControlArea(
+        target: world.children.query<PlayerStick>().first,
+        size: Vector2(screenWidth * 2, screenHeight * 0.3),
+        cornerRadius: const Radius.circular(ballRadius / 2),
+        position: Vector2(width / 2, height * 1.0)));
 
     for (var row = 0; row < 5; row++) {
       for (var col = 0; col < 10; col++) {
@@ -164,12 +158,6 @@ class BounceBreaker extends FlameGame with HasCollisionDetection, DragCallbacks,
         world.add(_buildGameBlock(row, col, durability));
       }
     }
-  }
-
-  @override
-  void onTap() {
-    super.onTap();
-    onStarGame();
   }
 
   @override
