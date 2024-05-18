@@ -25,7 +25,7 @@ class Ball extends CircleComponent with CollisionCallbacks, HasGameRef<BounceBre
           anchor: Anchor.center,
           priority: 100000,
           paint: Paint()
-            ..color = Colors.white
+            ..color = const Color.fromARGB(255, 255, 255, 255)
             ..style = PaintingStyle.fill,
           children: [CircleHitbox()],
         );
@@ -33,6 +33,19 @@ class Ball extends CircleComponent with CollisionCallbacks, HasGameRef<BounceBre
   final double difficultyModifier;
 
   final Map<int, Trail> _trails = {};
+
+  @override
+  void render(Canvas canvas) {
+    super.render(canvas);
+    final glowPaint = Paint()
+      ..color = const Color.fromARGB(255, 255, 0, 111).withOpacity(0.6)
+      ..maskFilter = MaskFilter.blur(BlurStyle.normal, convertRadiusToSigma(16));
+    canvas.drawCircle(const Offset(15, 14), radius + 5, glowPaint);
+  }
+
+  double convertRadiusToSigma(double radius) {
+    return radius * 0.57735 + 0.5;
+  }
 
   @override
   void update(double dt) {
