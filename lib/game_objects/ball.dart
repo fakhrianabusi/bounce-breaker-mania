@@ -23,8 +23,9 @@ class Ball extends CircleComponent with CollisionCallbacks, HasGameRef<BounceBre
   }) : super(
           radius: radius,
           anchor: Anchor.center,
+          priority: 100000,
           paint: Paint()
-            ..color = const Color.fromARGB(255, 255, 0, 157)
+            ..color = Colors.white
             ..style = PaintingStyle.fill,
           children: [CircleHitbox()],
         );

@@ -10,8 +10,7 @@ import '../configuration/screen.dart';
 import '../game/bounce_breaker_mania.dart';
 import 'player_stick.dart';
 
-class ExtraBall extends CircleComponent
-    with CollisionCallbacks, HasGameRef<BounceBreaker> {
+class ExtraBall extends CircleComponent with CollisionCallbacks, HasGameRef<BounceBreaker> {
   ExtraBall({
     required this.velocity,
     required super.position,
@@ -19,6 +18,7 @@ class ExtraBall extends CircleComponent
     required this.difficultyModifier,
   }) : super(
           radius: radius,
+          priority: 100000,
           anchor: Anchor.center,
           paint: Paint()
             ..color = Color.fromARGB(
@@ -59,8 +59,7 @@ class ExtraBall extends CircleComponent
   }
 
   @override
-  void onCollisionStart(
-      Set<Vector2> intersectionPoints, PositionComponent other) {
+  void onCollisionStart(Set<Vector2> intersectionPoints, PositionComponent other) {
     super.onCollisionStart(intersectionPoints, other);
     if (other is Screen) {
       if (intersectionPoints.first.y <= 0) {
@@ -78,8 +77,7 @@ class ExtraBall extends CircleComponent
       }
     } else if (other is PlayerStick) {
       velocity.y = -velocity.y;
-      velocity.x = velocity.x +
-          (position.x - other.position.x) / other.size.x * game.width * 0.3;
+      velocity.x = velocity.x + (position.x - other.position.x) / other.size.x * game.width * 0.3;
     } else if (other is GameBlocks) {
       if (position.y < other.position.y - other.size.y / 2) {
         velocity.y = -velocity.y;
