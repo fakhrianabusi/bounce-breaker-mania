@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 const screenWidth = 720.00;
 const screenHeight = 1600.00;
-const screenColor = Color(0xFF22272B);
+const screenColor = Color.fromARGB(30, 255, 0, 221);
 const ballRadius = screenWidth * 0.02;
 const playerStickWidth = 200.00;
 const playerStickHeight = 30.00;

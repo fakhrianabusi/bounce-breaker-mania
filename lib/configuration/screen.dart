@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
+import 'package:flame/flame.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -20,6 +21,7 @@ class Screen extends RectangleComponent with HasGameRef<BounceBreaker> {
         );
 
   late final TextBoxComponent scoreCard;
+  late final SpriteComponent background;
 
   final Paint strokePaint = Paint()
     ..shader = const LinearGradient(
@@ -28,13 +30,20 @@ class Screen extends RectangleComponent with HasGameRef<BounceBreaker> {
       colors: [Colors.white, Colors.pink],
     ).createShader(const Rect.fromLTWH(0, 0, screenWidth, screenHeight))
     ..style = PaintingStyle.stroke
+    ..strokeJoin = StrokeJoin.round
     ..strokeWidth = 3;
 
   @override
   FutureOr<void> onLoad() async {
     super.onLoad();
     size = Vector2(game.width, game.height);
-
+    final backgroundImage = await Flame.images.load('neon_bg.jpg');
+    background = SpriteComponent()
+      ..sprite = Sprite(backgroundImage)
+      ..size = size
+      ..position = Vector2.zero()
+      ..setAlpha(50);
+    await add(background);
     scoreCard = TextBoxComponent(
       size: Vector2(600, 100),
       text: '0',

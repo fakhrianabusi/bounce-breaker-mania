@@ -6,6 +6,7 @@ import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
 import 'package:flutter/material.dart';
 
+import '../configuration/constants.dart';
 import '../configuration/screen.dart';
 import '../game/bounce_breaker_mania.dart';
 import 'player_stick.dart';
@@ -109,7 +110,9 @@ class Trail extends Component {
   final List<double> _opacity;
   final Color _color;
   late final _linePaint = Paint()..style = PaintingStyle.stroke;
-  late final _circlePaint = Paint()..color = _color;
+  late final _circlePaint = Paint()
+    ..color = _color
+    ..maskFilter = MaskFilter.blur(BlurStyle.normal, convertRadiusToSigma(8));
   double _timer = 0;
   final _vanishInterval = 0.03;
   final Vector2 _lastPoint;

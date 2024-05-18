@@ -12,7 +12,7 @@ class GameOverMenu extends StatelessWidget {
     return Center(
       child: Container(
         width: double.maxFinite,
-        color: const Color.fromARGB(150, 244, 67, 54),
+        color: const Color.fromARGB(146, 112, 112, 112).withRed(600),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

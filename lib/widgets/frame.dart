@@ -31,7 +31,7 @@ class _FrameState extends State<Frame> {
       home: Scaffold(
         body: Container(
           decoration: const BoxDecoration(
-            image: DecorationImage(image: AssetImage('assets/images/bg.png'), fit: BoxFit.cover),
+            image: DecorationImage(image: AssetImage('assets/images/neon_bg.jpg'), fit: BoxFit.cover),
           ),
           child: SafeArea(
             child: Padding(
@@ -58,17 +58,19 @@ class _FrameState extends State<Frame> {
                                           'Bounce Breaker Mania',
                                           style: TextStyle(
                                             color: Colors.white,
-                                            fontSize: 32,
+                                            fontSize: 68,
                                             fontFamily: GoogleFonts.orbitron().fontFamily,
                                           ),
                                         ),
                                         const SizedBox(height: 32),
-                                        Text('High Score: ${game.scoreManager.highScore.value}',
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 24,
-                                              fontFamily: GoogleFonts.orbitron().fontFamily,
-                                            )),
+                                        Text(
+                                          'High Score: ${game.scoreManager.highScore.value}',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 24,
+                                            fontFamily: GoogleFonts.orbitron().fontFamily,
+                                          ),
+                                        ),
                                         const SizedBox(height: 32),
                                         ElevatedButton(
                                           onPressed: () async {
