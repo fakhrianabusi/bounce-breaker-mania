@@ -14,6 +14,10 @@ import '../game/bounce_breaker_mania.dart';
 import 'block.dart';
 import 'player_stick.dart';
 
+double convertRadiusToSigma(double radius) {
+  return radius * 0.57735 + 0.5;
+}
+
 class Ball extends CircleComponent with CollisionCallbacks, HasGameRef<BounceBreaker> {
   Ball({
     required this.velocity,
@@ -25,7 +29,7 @@ class Ball extends CircleComponent with CollisionCallbacks, HasGameRef<BounceBre
           anchor: Anchor.center,
           priority: 100000,
           paint: Paint()
-            ..color = const Color.fromARGB(255, 255, 255, 255)
+            ..color = const Color.fromARGB(255, 198, 81, 214)
             ..style = PaintingStyle.fill,
           children: [CircleHitbox()],
         );
@@ -38,13 +42,9 @@ class Ball extends CircleComponent with CollisionCallbacks, HasGameRef<BounceBre
   void render(Canvas canvas) {
     super.render(canvas);
     final glowPaint = Paint()
-      ..color = const Color.fromARGB(255, 255, 0, 111).withOpacity(0.6)
+      ..color = const Color.fromARGB(255, 253, 86, 206).withOpacity(0.6)
       ..maskFilter = MaskFilter.blur(BlurStyle.normal, convertRadiusToSigma(16));
     canvas.drawCircle(const Offset(15, 14), radius + 5, glowPaint);
-  }
-
-  double convertRadiusToSigma(double radius) {
-    return radius * 0.57735 + 0.5;
   }
 
   @override
@@ -134,7 +134,9 @@ class Trail extends Component {
   final List<double> _opacity;
   final Color _color;
   late final _linePaint = Paint()..style = PaintingStyle.stroke;
-  late final _circlePaint = Paint()..color = _color;
+  late final _circlePaint = Paint()
+    ..color = _color
+    ..maskFilter = MaskFilter.blur(BlurStyle.normal, convertRadiusToSigma(8));
   double _timer = 0;
   final _vanishInterval = 0.03;
   final Vector2 _lastPoint;
