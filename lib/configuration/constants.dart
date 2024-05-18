@@ -6,7 +6,7 @@ const screenHeight = 1600.00;
 const screenColor = Color(0xFF22272B);
 const ballRadius = screenWidth * 0.02;
 const playerStickWidth = 200.00;
-const playerStickHeight = 40.00;
+const playerStickHeight = 30.00;
 const playerStickMoveSteps = screenWidth * 0.03;
 const difficultyModifier = 1.02;
 final brickSize = Vector2(50, 40);
@@ -44,3 +44,7 @@ List<List<int>> level_2 = [
 
 final level_1Position = level_1[0].length * (brickSize.x + bickPadding) - bickPadding;
 final level_2Position = level_2[0].length * (brickSize.x + bickPadding) - bickPadding;
+
+double convertRadiusToSigma(double radius) {
+  return radius * 0.57735 + 0.5;
+}

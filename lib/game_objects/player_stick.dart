@@ -12,8 +12,7 @@ import 'package:flutter/material.dart';
 
 import '../game/bounce_breaker_mania.dart';
 
-class PlayerStick extends PositionComponent
-    with DragCallbacks, HasGameRef<BounceBreaker> {
+class PlayerStick extends PositionComponent with DragCallbacks, HasGameRef<BounceBreaker> {
   PlayerStick({
     required this.cornerRadius,
     required super.position,
@@ -70,7 +69,7 @@ class PlayerStick extends PositionComponent
   }
 
   void resetSize() {
-    size = Vector2(playerStickWidth, playerStickHeight);
+    size = Vector2(game.width / 4, game.height / 80);
   }
 
   void resetSpeed() {
@@ -89,10 +88,10 @@ class PlayerStick extends PositionComponent
     switch (powerUp.type) {
       case PowerUpType.stickSize:
         if (powerUp.duration.inSeconds > 0) {
-          size = Vector2(playerStickWidth * 2, playerStickHeight);
+          size = Vector2(game.width * 0.4, game.height / 80);
           Future.delayed(powerUp.duration, resetSize);
         } else {
-          size = Vector2(playerStickWidth * 2, playerStickHeight);
+          size = Vector2(game.width * 0.4, game.height / 80);
         }
 
         break;

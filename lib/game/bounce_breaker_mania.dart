@@ -70,7 +70,7 @@ class BounceBreaker extends FlameGame with HasCollisionDetection, DragCallbacks 
 
   List<Component> _buildPlayerStick() {
     final stick = PlayerStick(
-      size: Vector2(width / 4, height / 40),
+      size: Vector2(width / 4, height / 80),
       position: Vector2(width / 2, height * 0.65),
       cornerRadius: const Radius.circular(ballRadius / 2),
     );

@@ -9,14 +9,11 @@ import 'package:flame/effects.dart';
 import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
 
+import '../configuration/constants.dart';
 import '../configuration/screen.dart';
 import '../game/bounce_breaker_mania.dart';
 import 'block.dart';
 import 'player_stick.dart';
-
-double convertRadiusToSigma(double radius) {
-  return radius * 0.57735 + 0.5;
-}
 
 class Ball extends CircleComponent with CollisionCallbacks, HasGameRef<BounceBreaker> {
   Ball({
