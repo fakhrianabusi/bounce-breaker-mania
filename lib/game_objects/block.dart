@@ -9,14 +9,13 @@ import '../game/bounce_breaker_mania.dart';
 import 'ball.dart';
 import 'power_up.dart';
 
-class GameBlocks extends RectangleComponent
-    with CollisionCallbacks, HasGameRef<BounceBreaker> {
+class GameBlocks extends RectangleComponent with CollisionCallbacks, HasGameRef<BounceBreaker> {
   GameBlocks({
     required this.durability,
     required Color color,
-    required double size,
+    required Vector2 size,
   }) : super(
-          size: Vector2.all(size), // block size
+          size: size, // block size
           paint: Paint()
             ..color = color
             ..style = PaintingStyle.fill,
@@ -76,8 +75,7 @@ class GameBlocks extends RectangleComponent
   }
 
   @override
-  void onCollisionStart(
-      Set<Vector2> intersectionPoints, PositionComponent other) {
+  void onCollisionStart(Set<Vector2> intersectionPoints, PositionComponent other) {
     if (other is Ball || other is ExtraBall && !hasCollided) {
       hasCollided = true;
 
@@ -88,14 +86,9 @@ class GameBlocks extends RectangleComponent
         game.scoreManager.updateHighScore();
         debugPrint(game.scoreManager.currentScore.toString());
         final random = Random();
-        final powerUpTypes = [
-          PowerUpType.ballCount,
-          PowerUpType.stickSize,
-          PowerUpType.ballSpeed
-        ];
+        final powerUpTypes = [PowerUpType.ballCount, PowerUpType.stickSize, PowerUpType.ballSpeed];
         final selectedType = powerUpTypes[random.nextInt(powerUpTypes.length)];
-        final powerUpDuration = Duration(
-            seconds: random.nextInt(10) + 7); // 7 a 16 segundos de duração
+        final powerUpDuration = Duration(seconds: random.nextInt(10) + 7); // 7 a 16 segundos de duração
 
         final powerUp = PowerUp(
           sprite: selecSpritebyPowerUpType(selectedType),

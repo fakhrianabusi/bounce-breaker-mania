@@ -38,11 +38,7 @@ class BounceBreaker extends FlameGame with HasCollisionDetection, DragCallbacks 
 
   int get getDurability => rand.nextInt(2) + 1;
 
-  double get brickSize {
-    const totalPadding = (GameConstants.noBricksInRow + 1) * GameConstants.brickPadding;
-    final screenMinSize = size.x < size.y ? size.x : size.y;
-    return (screenMinSize - totalPadding) / GameConstants.noBricksInRow;
-  } // Calculate the size of the bricks based on the screen size
+  final offsetX = (screenWidth - level_1Position) / 2;
 
   Future<void> reset() async {
     FlameAudio.bgm.stop();
@@ -52,10 +48,10 @@ class BounceBreaker extends FlameGame with HasCollisionDetection, DragCallbacks 
     _buildPlayerStick().forEach((component) {
       world.add(component);
     });
-
-    for (var row = 0; row < 5; row++) {
-      for (var col = 0; col < 10; col++) {
-        int durability = getDurability;
+    for (var row = 0; row < level_1.length; row++) {
+      for (var col = 0; col < level_1[row].length; col++) {
+        int durability = level_1[row][col];
+        if (durability == 0) continue;
         world.add(_buildGameBlock(row, col, durability));
       }
     }
@@ -67,10 +63,10 @@ class BounceBreaker extends FlameGame with HasCollisionDetection, DragCallbacks 
       durability: durability,
       size: brickSize,
     )..position = Vector2(
-          col * (brickSize + GameConstants.brickPadding) + GameConstants.brickPadding,
-          row * (brickSize + GameConstants.brickPadding) + GameConstants.brickPadding * 2,
+          col * (brickSize.x + bickPadding) + bickPadding + offsetX,
+          row * (brickSize.y + bickPadding) + bickPadding * 2,
         ) +
-        Vector2(0, height * 0.1); // Offset of the bricks from the top
+        Vector2(0, height * 0.15); // Offset of the bricks from the top
   }
 
   List<Component> _buildPlayerStick() {
@@ -160,9 +156,10 @@ class BounceBreaker extends FlameGame with HasCollisionDetection, DragCallbacks 
       world.add(component);
     });
 
-    for (var row = 0; row < 5; row++) {
-      for (var col = 0; col < 10; col++) {
-        int durability = getDurability;
+    for (var row = 0; row < level_1.length; row++) {
+      for (var col = 0; col < level_1[row].length; col++) {
+        int durability = level_1[row][col];
+        if (durability == 0) continue;
         world.add(_buildGameBlock(row, col, durability));
       }
     }
