@@ -40,6 +40,8 @@ dependencies:
 
   flame_audio: ^2.10.1
 
+  shared_preferences: ^2.2.3
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

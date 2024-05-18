@@ -58,6 +58,6 @@ class Screen extends RectangleComponent with HasGameRef<BounceBreaker> {
 
   @override
   void update(double dt) {
-    scoreCard.text = '${game.score.value}';
+    scoreCard.text = '${game.scoreManager.currentScore.value}';
   }
 }

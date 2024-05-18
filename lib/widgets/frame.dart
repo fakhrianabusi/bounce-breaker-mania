@@ -61,6 +61,13 @@ class _FrameState extends State<Frame> {
                                           ),
                                         ),
                                         const SizedBox(height: 32),
+                                        Text('High Score: ${game.scoreManager.highScore.value}',
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 24,
+                                              fontFamily: GoogleFonts.orbitron().fontFamily,
+                                            )),
+                                        const SizedBox(height: 32),
                                         ElevatedButton(
                                           onPressed: () async {
                                             await game.onStarGame();

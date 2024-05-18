@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 
 import '../configuration/constants.dart';
 import '../configuration/screen.dart';
+import '../custom_widgets/score_manager.dart';
 import '../game_objects/ball.dart';
 import '../game_objects/block.dart';
 import '../game_objects/player_stick.dart';
@@ -24,7 +25,8 @@ class BounceBreaker extends FlameGame with HasCollisionDetection, DragCallbacks 
             height: screenHeight,
           ),
         );
-  final ValueNotifier<int> score = ValueNotifier<int>(0);
+  final scoreManager = ScoreManager();
+  // final ValueNotifier<int> score = ValueNotifier<int>(0);
   final rand = math.Random();
   late SpriteComponent ballCount;
   late SpriteComponent stickSize;
@@ -126,7 +128,7 @@ class BounceBreaker extends FlameGame with HasCollisionDetection, DragCallbacks 
     world.removeAll(world.children.query<SwipeControlArea>());
     world.removeAll(world.children.query<ExtraBall>());
 
-    score.value = 0;
+    scoreManager.currentScore.value = 0;
     gameState = GameStatus.playing;
 
     final powerUpSprite1 = await loadSprite('ball_count.png');

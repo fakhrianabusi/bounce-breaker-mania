@@ -66,7 +66,7 @@ class Ball extends CircleComponent with CollisionCallbacks, HasGameRef<BounceBre
     gameRef.world.children.whereType<Trail>().forEach((element) {
       element.removeFromParent();
     });
-    gameRef.score.value = 0;
+    gameRef.scoreManager.currentScore.value = 0;
 
     FlameAudio.play('game_over.mp3');
     FlameAudio.bgm.play('game_over_drama.mp3');
