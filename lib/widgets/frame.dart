@@ -1,6 +1,7 @@
 import 'package:bounce_breaker/configuration/constants.dart';
 import 'package:bounce_breaker/custom_widgets/game_over_menu.dart';
 import 'package:flame/game.dart';
+import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -19,6 +20,7 @@ class _FrameState extends State<Frame> {
   late final BounceBreaker game;
   @override
   void initState() {
+    FlameAudio.bgm.play('menu_music.ogg', volume: 1);
     super.initState();
     game = BounceBreaker();
   }
@@ -70,6 +72,7 @@ class _FrameState extends State<Frame> {
                                         const SizedBox(height: 32),
                                         ElevatedButton(
                                           onPressed: () async {
+                                            FlameAudio.bgm.stop();
                                             await game.onStarGame();
                                           },
                                           child: Padding(
