@@ -5,8 +5,7 @@ import 'package:flutter/material.dart';
 
 enum PowerUpType { stickSize, ballSpeed, ballCount }
 
-class PowerUp extends SpriteComponent
-    with CollisionCallbacks, HasGameRef<BounceBreaker> {
+class PowerUp extends SpriteComponent with CollisionCallbacks, HasGameRef<BounceBreaker> {
   final PowerUpType type;
   final Duration duration;
   PowerUp({

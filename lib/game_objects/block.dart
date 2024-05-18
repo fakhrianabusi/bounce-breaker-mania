@@ -29,6 +29,8 @@ class GameBlocks extends RectangleComponent with CollisionCallbacks, HasGameRef<
       return const Color.fromARGB(255, 161, 103, 238);
     } else if (durability == 2) {
       return const Color.fromARGB(255, 1, 217, 166);
+    } else if (durability == 3) {
+      return const Color.fromARGB(255, 0, 123, 255);
     } else {
       throw Exception('Cor indefinida para durabilidade $durability');
     }

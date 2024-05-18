@@ -37,7 +37,7 @@ class BounceBreaker extends FlameGame with HasCollisionDetection, DragCallbacks 
   double get height => size.y;
 
   // Offset of the bricks from the left we will need to adjust this based on the levels
-  final offsetX = (screenWidth - level_1Position) / 2;
+  final offsetX = (screenWidth - level_2Position) / 2;
 
   Future<void> reset() async {
     FlameAudio.bgm.stop();
@@ -47,9 +47,9 @@ class BounceBreaker extends FlameGame with HasCollisionDetection, DragCallbacks 
     _buildPlayerStick().forEach((component) {
       world.add(component);
     });
-    for (var row = 0; row < level_1.length; row++) {
-      for (var col = 0; col < level_1[row].length; col++) {
-        int durability = level_1[row][col];
+    for (var row = 0; row < level_2.length; row++) {
+      for (var col = 0; col < level_2[row].length; col++) {
+        int durability = level_2[row][col];
         if (durability == 0) continue;
         world.add(_buildGameBlock(row, col, durability));
       }
@@ -155,9 +155,9 @@ class BounceBreaker extends FlameGame with HasCollisionDetection, DragCallbacks 
       world.add(component);
     });
 
-    for (var row = 0; row < level_1.length; row++) {
-      for (var col = 0; col < level_1[row].length; col++) {
-        int durability = level_1[row][col];
+    for (var row = 0; row < level_2.length; row++) {
+      for (var col = 0; col < level_2[row].length; col++) {
+        int durability = level_2[row][col];
         if (durability == 0) continue;
         world.add(_buildGameBlock(row, col, durability));
       }
