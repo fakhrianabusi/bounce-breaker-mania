@@ -1,7 +1,8 @@
-import 'package:bounce_breaker/game/bounce_breaker_mania.dart';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
+
+import '../game/bounce_breaker_mania.dart';
 
 enum PowerUpType { stickSize, ballSpeed, ballCount }
 

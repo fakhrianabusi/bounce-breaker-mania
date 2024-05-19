@@ -1,6 +1,7 @@
-import 'package:bounce_breaker/game/bounce_breaker_mania.dart';
 import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
+
+import '../game/bounce_breaker_mania.dart';
 
 class PauseMenu extends StatelessWidget {
   static const id = 'pause_menu';

@@ -1,6 +1,5 @@
 import 'dart:math' as math;
 
-import 'package:bounce_breaker/game_objects/extra_ball_power.dart';
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
@@ -10,10 +9,7 @@ import 'package:flutter/material.dart';
 import '../configuration/constants.dart';
 import '../configuration/screen.dart';
 import '../custom_widgets/score_manager.dart';
-import '../game_objects/ball.dart';
-import '../game_objects/block.dart';
-import '../game_objects/player_stick.dart';
-import '../game_objects/swipe_controls.dart';
+import '../game_objects/components.dart';
 
 enum GameStatus { initial, playing, paused, nextLevel, gameOver }
 

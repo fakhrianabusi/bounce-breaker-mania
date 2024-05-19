@@ -1,12 +1,12 @@
 import 'dart:math';
 
-import 'package:bounce_breaker/game_objects/extra_ball_power.dart';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
 
 import '../game/bounce_breaker_mania.dart';
 import 'ball.dart';
+import 'extra_ball_power.dart';
 import 'power_up.dart';
 
 class GameBlocks extends RectangleComponent with CollisionCallbacks, HasGameRef<BounceBreaker> {

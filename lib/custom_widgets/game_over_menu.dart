@@ -1,5 +1,6 @@
-import 'package:bounce_breaker/game/bounce_breaker_mania.dart';
 import 'package:flutter/material.dart';
+
+import '../game/bounce_breaker_mania.dart';
 
 class GameOverMenu extends StatelessWidget {
   static const id = 'game_over_menu';

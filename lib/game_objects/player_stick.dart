@@ -1,16 +1,16 @@
 import 'dart:developer';
 
-import 'package:bounce_breaker/configuration/constants.dart';
-import 'package:bounce_breaker/game_objects/ball.dart';
-import 'package:bounce_breaker/game_objects/extra_ball_power.dart';
-import 'package:bounce_breaker/game_objects/power_up.dart';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
 import 'package:flame/events.dart';
 import 'package:flutter/material.dart';
 
+import '../configuration/constants.dart';
 import '../game/bounce_breaker_mania.dart';
+import 'ball.dart';
+import 'extra_ball_power.dart';
+import 'power_up.dart';
 
 class PlayerStick extends PositionComponent with DragCallbacks, HasGameRef<BounceBreaker> {
   PlayerStick({

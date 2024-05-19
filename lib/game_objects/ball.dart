@@ -1,8 +1,5 @@
 import 'dart:math';
 
-import 'package:bounce_breaker/custom_widgets/game_over_menu.dart';
-import 'package:bounce_breaker/game_objects/extra_ball_power.dart';
-import 'package:bounce_breaker/game_objects/power_up.dart';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
@@ -11,9 +8,12 @@ import 'package:flutter/material.dart';
 
 import '../configuration/constants.dart';
 import '../configuration/screen.dart';
+import '../custom_widgets/game_over_menu.dart';
 import '../game/bounce_breaker_mania.dart';
 import 'block.dart';
+import 'extra_ball_power.dart';
 import 'player_stick.dart';
+import 'power_up.dart';
 
 class Ball extends CircleComponent with CollisionCallbacks, HasGameRef<BounceBreaker> {
   Ball({

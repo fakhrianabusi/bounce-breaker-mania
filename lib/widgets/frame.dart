@@ -1,10 +1,10 @@
-import 'package:bounce_breaker/configuration/constants.dart';
-import 'package:bounce_breaker/custom_widgets/game_over_menu.dart';
 import 'package:flame/game.dart';
 import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../configuration/constants.dart';
+import '../custom_widgets/game_over_menu.dart';
 import '../custom_widgets/pause_button.dart';
 import '../custom_widgets/pause_menu.dart';
 import '../game/bounce_breaker_mania.dart';
