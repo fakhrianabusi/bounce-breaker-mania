@@ -27,11 +27,21 @@ class Screen extends RectangleComponent with HasGameRef<BounceBreaker> {
     ..shader = const LinearGradient(
       begin: Alignment.topCenter,
       end: Alignment.bottomCenter,
-      colors: [Colors.white, Colors.pink],
+      colors: [
+        Colors.white,
+        Colors.pink,
+        Colors.purple,
+        Colors.blue,
+        Colors.green,
+        Colors.yellow,
+        Colors.orange,
+        Colors.red
+      ],
     ).createShader(const Rect.fromLTWH(0, 0, screenWidth, screenHeight))
     ..style = PaintingStyle.stroke
-    ..strokeJoin = StrokeJoin.round
-    ..strokeWidth = 3;
+    ..strokeCap = StrokeCap.round
+    ..strokeWidth = 10
+    ..strokeJoin = StrokeJoin.round;
 
   @override
   FutureOr<void> onLoad() async {
@@ -62,7 +72,9 @@ class Screen extends RectangleComponent with HasGameRef<BounceBreaker> {
   @override
   void render(Canvas canvas) {
     super.render(canvas);
-    canvas.drawRect(size.toRect(), strokePaint);
+    const rect = Rect.fromLTWH(0, 0, screenWidth, screenHeight);
+    canvas.drawRect(rect, strokePaint);
+    // canvas.drawRect(size.toRect(), strokePaint);
   }
 
   @override

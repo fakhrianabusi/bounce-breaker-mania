@@ -101,7 +101,11 @@ class GameBlocks extends RectangleComponent with CollisionCallbacks, HasGameRef<
           type: selectedType,
           duration: powerUpDuration,
         );
-        gameRef.world.add(powerUp);
+
+        // 12% of chance to spawn a power up
+        if (random.nextDouble() < 0.12) {
+          gameRef.world.add(powerUp);
+        }
         removeFromParent();
         return;
       }

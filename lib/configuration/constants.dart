@@ -8,7 +8,7 @@ const ballRadius = screenWidth * 0.02;
 const playerStickWidth = 200.00;
 const playerStickHeight = 30.00;
 const playerStickMoveSteps = screenWidth * 0.03;
-const difficultyModifier = 1.02;
+const difficultyModifier = 1.01;
 final brickSize = Vector2(50, 40);
 
 const bickPadding = 2.5;
