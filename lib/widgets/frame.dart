@@ -49,7 +49,6 @@ class _FrameState extends State<Frame> {
                     height: screenHeight,
                     child: GameWidget(
                       game: game,
-                      initialActiveOverlays: const [PauseButton.id],
                       overlayBuilderMap: {
                         GameStatus.initial.name: (context, BounceBreaker game) => Center(
                               child: Column(
@@ -77,6 +76,7 @@ class _FrameState extends State<Frame> {
                                   ElevatedButton(
                                     onPressed: () async {
                                       Screen.shouldDrawRectStroke = false;
+                                      game.overlays.add(PauseButton.id);
                                       FlameAudio.bgm.stop();
                                       await game.onStarGame();
                                     },
