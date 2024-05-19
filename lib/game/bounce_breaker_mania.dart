@@ -59,8 +59,8 @@ class BounceBreaker extends FlameGame with HasCollisionDetection, DragCallbacks 
       durability: durability,
       size: brickSize,
     )..position = Vector2(
-          col * (brickSize.x + bickPadding) + bickPadding + offsetX,
-          row * (brickSize.y + bickPadding) + bickPadding * 2,
+          col * (brickSize.x + brickPadding) + brickPadding + offsetX,
+          row * (brickSize.y + brickPadding) + brickPadding * 2,
         ) +
         Vector2(0, height * 0.15); // Offset of the bricks from the top
   }

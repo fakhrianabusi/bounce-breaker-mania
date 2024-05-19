@@ -17,7 +17,7 @@ const playerStickHeight = 30.00;
 const difficultyModifier = 1.01;
 final brickSize = Vector2(50, 40);
 
-const bickPadding = 2.5;
+const brickPadding = 2.5;
 
 final Map<int, Color> blockColors = {
   1: Colors.red,
@@ -53,7 +53,7 @@ List<List<int>> level_2 = [
 ];
 
 double calculateLevelCenter(List<List<int>> level) {
-  return level[0].length * (brickSize.x + bickPadding) - bickPadding;
+  return level[0].length * (brickSize.x + brickPadding) - brickPadding;
 }
 
 double convertRadiusToSigma(double radius) {
