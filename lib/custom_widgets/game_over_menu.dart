@@ -19,44 +19,47 @@ class GameOverMenu extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
+            const Text(
               'Game Over!',
               style: TextStyle(
                 color: Colors.white,
-                fontSize: Theme.of(context).textTheme.headlineLarge!.fontSize,
+                fontSize: 64,
                 fontFamily: 'Press Start 2P',
               ),
             ),
-            const SizedBox(height: 32),
-            ElevatedButton(
-              style: ButtonStyle(foregroundColor: MaterialStateProperty.all(Colors.black87)),
-              onPressed: () {
-                gameRef.overlays.remove(GameOverMenu.id);
-                gameRef.reset();
-              },
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  'Reiniciar',
-                  style: TextStyle(
-                      fontSize: Theme.of(context).textTheme.headlineMedium!.fontSize, fontFamily: 'Press Start 2P'),
+            const SizedBox(height: 64),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                  style: ButtonStyle(foregroundColor: MaterialStateProperty.all(Colors.black87)),
+                  onPressed: () {
+                    log('hello');
+                  },
+                  child: const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Text(
+                      'Sair',
+                      style: TextStyle(fontSize: 32, fontFamily: 'Press Start 2P'),
+                    ),
+                  ),
                 ),
-              ),
-            ),
-            const SizedBox(height: 16),
-            ElevatedButton(
-              style: ButtonStyle(foregroundColor: MaterialStateProperty.all(Colors.black87)),
-              onPressed: () {
-                log('hello');
-              },
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  'Exit',
-                  style: TextStyle(
-                      fontSize: Theme.of(context).textTheme.headlineMedium!.fontSize, fontFamily: 'Press Start 2P'),
+                const SizedBox(width: 32),
+                ElevatedButton(
+                  style: ButtonStyle(foregroundColor: MaterialStateProperty.all(Colors.black87)),
+                  onPressed: () {
+                    gameRef.overlays.remove(GameOverMenu.id);
+                    gameRef.reset();
+                  },
+                  child: const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Text(
+                      'Reiniciar',
+                      style: TextStyle(fontSize: 32, fontFamily: 'Press Start 2P'),
+                    ),
+                  ),
                 ),
-              ),
+              ],
             ),
           ],
         ),

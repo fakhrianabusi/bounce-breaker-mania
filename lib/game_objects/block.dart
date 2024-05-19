@@ -50,7 +50,7 @@ class GameBlocks extends RectangleComponent with CollisionCallbacks, HasGameRef<
       textRenderer: TextPaint(
         style: const TextStyle(
           color: Colors.black,
-          fontSize: 20,
+          fontSize: 30,
         ),
       ),
     )..center = size / 2;

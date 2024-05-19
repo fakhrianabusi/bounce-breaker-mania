@@ -15,7 +15,7 @@ const playerStickWidth = 200.00;
 const playerStickHeight = 30.00;
 
 const difficultyModifier = 1.01;
-final brickSize = Vector2(50, 40);
+final brickSize = Vector2(70, 60);
 
 const brickPadding = 2.5;
 
