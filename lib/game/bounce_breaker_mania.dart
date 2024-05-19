@@ -32,9 +32,6 @@ class BounceBreaker extends FlameGame with HasCollisionDetection, DragCallbacks 
 
   double get height => size.y;
 
-  // Offset of the bricks from the left we will need to adjust this based on the levels
-  final offsetX = (screenWidth - calculateLevelCenter(level_1)) / 2;
-
   Future<void> reset() async {
     FlameAudio.bgm.stop();
     FlameAudio.bgm.play('arcade.mp3', volume: 0.5);
@@ -47,19 +44,19 @@ class BounceBreaker extends FlameGame with HasCollisionDetection, DragCallbacks 
       for (var col = 0; col < level_1[row].length; col++) {
         int durability = level_1[row][col];
         if (durability == 0) continue;
-        world.add(_buildGameBlock(row, col, durability));
+        world.add(_buildGameBlock(row, col, durability, lv_1PositionX));
       }
     }
   }
 
-  GameBlocks _buildGameBlock(int row, int col, int durability) {
+  GameBlocks _buildGameBlock(int row, int col, int durability, double offset) {
     return GameBlocks(
       hardness: durability,
       color: GameBlocks.getBlockColor(durability),
       durability: durability,
       size: brickSize,
     )..position = Vector2(
-          col * (brickSize.x + brickPadding) + brickPadding + offsetX,
+          col * (brickSize.x + brickPadding) + brickPadding + offset,
           row * (brickSize.y + brickPadding) + brickPadding * 2,
         ) +
         Vector2(0, height * 0.15); // Offset of the bricks from the top
@@ -156,7 +153,7 @@ class BounceBreaker extends FlameGame with HasCollisionDetection, DragCallbacks 
       for (var col = 0; col < level_2[row].length; col++) {
         int durability = level_2[row][col];
         if (durability == 0) continue;
-        world.add(_buildGameBlock(row, col, durability));
+        world.add(_buildGameBlock(row, col, durability, lv_2PositionX));
       }
     }
   }
