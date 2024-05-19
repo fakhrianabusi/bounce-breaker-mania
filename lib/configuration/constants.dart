@@ -1,9 +1,8 @@
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 
-Size screenSize = WidgetsBinding.instance.platformDispatcher.views.first.physicalSize;
-double screenWidth = screenSize.width;
-double screenHeight = screenSize.height;
+double screenWidth = 768;
+double screenHeight = 1600;
 
 double ballRadius = screenWidth * 0.02;
 double playerStickMoveSteps = screenWidth * 0.03;
@@ -11,12 +10,10 @@ double brickGutter = screenWidth * 0.015;
 
 const screenColor = Color.fromARGB(30, 255, 0, 221);
 
-const playerStickWidth = 200.00;
-const playerStickHeight = 50.00;
-Vector2 playerStickSize = Vector2(screenWidth / 3, screenHeight / 50);
+Vector2 playerStickSize = Vector2(screenWidth / 6, screenHeight / 90);
 
 const difficultyModifier = 1.01;
-final brickSize = Vector2(70, 60);
+final brickSize = Vector2(screenWidth / 16, screenHeight / 40);
 
 const brickPadding = 2.5;
 

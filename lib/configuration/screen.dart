@@ -73,7 +73,7 @@ class Screen extends RectangleComponent with HasGameRef<BounceBreaker> {
   @override
   void render(Canvas canvas) {
     super.render(canvas);
-    final rect = Rect.fromLTWH(100, 300, screenWidth - 200, screenHeight - 600);
+    final rect = Rect.fromLTWH(60, 120, screenWidth - 120, screenHeight - 200);
     if (shouldDrawRectStroke) {
       canvas.drawRect(rect, strokePaint);
     }

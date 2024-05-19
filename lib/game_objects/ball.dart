@@ -28,7 +28,7 @@ class Ball extends CircleComponent with CollisionCallbacks, HasGameRef<BounceBre
           paint: Paint()
             ..color = const Color.fromARGB(255, 198, 81, 214)
             ..style = PaintingStyle.fill,
-          children: [CircleHitbox()],
+          children: [RectangleHitbox()],
         );
   Vector2 velocity;
   final double difficultyModifier;

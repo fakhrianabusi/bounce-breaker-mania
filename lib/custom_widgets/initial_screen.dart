@@ -19,13 +19,18 @@ class InitialScreen extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(
-            textAlign: TextAlign.center,
-            'Bounce Breaker Mania',
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 60,
-              fontFamily: GoogleFonts.orbitron().fontFamily,
+          ConstrainedBox(
+            constraints: const BoxConstraints(
+              maxWidth: 600,
+            ),
+            child: Text(
+              textAlign: TextAlign.center,
+              'Bounce Breaker Mania',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 62,
+                fontFamily: GoogleFonts.orbitron().fontFamily,
+              ),
             ),
           ),
           const SizedBox(height: 32),
