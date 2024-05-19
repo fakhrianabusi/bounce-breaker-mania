@@ -67,7 +67,7 @@ class BounceBreaker extends FlameGame with HasCollisionDetection, DragCallbacks 
 
   List<Component> _buildPlayerStick() {
     final stick = PlayerStick(
-      size: Vector2(width / 4, height / 80),
+      size: playerStickSize,
       position: Vector2(width / 2, height * 0.65),
       cornerRadius: Radius.circular(ballRadius / 2),
     );
@@ -75,7 +75,7 @@ class BounceBreaker extends FlameGame with HasCollisionDetection, DragCallbacks 
     final swipeControl = SwipeControlArea(
       target: stick,
       cornerRadius: const Radius.circular(20),
-      size: Vector2(screenWidth * 2, screenHeight * 0.3),
+      size: Vector2(screenWidth * 2, screenHeight * 0.4),
       position: Vector2(width / 2, height * 1.0),
     );
 

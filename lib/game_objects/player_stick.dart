@@ -69,7 +69,7 @@ class PlayerStick extends PositionComponent with DragCallbacks, HasGameRef<Bounc
   }
 
   void resetSize() {
-    size = Vector2(game.width / 4, game.height / 80);
+    size = playerStickSize;
   }
 
   void resetSpeed() {
@@ -88,10 +88,10 @@ class PlayerStick extends PositionComponent with DragCallbacks, HasGameRef<Bounc
     switch (powerUp.type) {
       case PowerUpType.stickSize:
         if (powerUp.duration.inSeconds > 0) {
-          size = Vector2(game.width * 0.4, game.height / 80);
+          size = Vector2(game.width / 2, game.height / 50);
           Future.delayed(powerUp.duration, resetSize);
         } else {
-          size = Vector2(game.width * 0.4, game.height / 80);
+          size = playerStickSize;
         }
 
         break;
