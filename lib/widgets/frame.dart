@@ -65,7 +65,7 @@ class _FrameState extends State<Frame> {
                                   ),
                                   const SizedBox(height: 32),
                                   Text(
-                                    'High Score: ${game.scoreManager.highScore.value}',
+                                    'Melhor pontuação: ${game.scoreManager.highScore.value}',
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 32,
@@ -83,7 +83,7 @@ class _FrameState extends State<Frame> {
                                     child: Padding(
                                       padding: const EdgeInsets.all(16.0),
                                       child: Text(
-                                        'Tap to Start',
+                                        'Start',
                                         style: TextStyle(
                                           fontSize: 40,
                                           fontFamily: GoogleFonts.orbitron().fontFamily,
