@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
 
@@ -28,7 +30,7 @@ class PauseMenu extends StatelessWidget {
             ),
             ElevatedButton(
               onPressed: () {
-                print('hello');
+                log('hello');
               },
               child: const Text('Exit', style: TextStyle(fontFamily: 'Press Start 2P')),
             ),

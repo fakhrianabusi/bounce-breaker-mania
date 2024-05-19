@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 
 import '../game/bounce_breaker_mania.dart';
@@ -36,7 +38,7 @@ class GameOverMenu extends StatelessWidget {
             ElevatedButton(
               style: ButtonStyle(foregroundColor: MaterialStateProperty.all(Colors.black87)),
               onPressed: () {
-                print('hello');
+                log('hello');
               },
               child: const Text('Exit', style: TextStyle(fontFamily: 'Press Start 2P')),
             ),
