@@ -20,32 +20,43 @@ class PauseMenu extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            ElevatedButton(
-              onPressed: () {
-                gameRef.resumeEngine();
-                gameRef.overlays.remove(PauseMenu.id);
-                FlameAudio.bgm.resume();
-              },
-              child: Text(
-                'Continuar',
-                style: TextStyle(
-                  fontFamily: 'Press Start 2P',
-                  fontSize: Theme.of(context).textTheme.headlineLarge!.fontSize,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    log('hello');
+                  },
+                  child: const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 14.0),
+                    child: Text(
+                      'Exit',
+                      style: TextStyle(
+                        fontFamily: 'Press Start 2P',
+                        fontSize: 32,
+                      ),
+                    ),
+                  ),
                 ),
-              ),
-            ),
-            const SizedBox(height: 32),
-            ElevatedButton(
-              onPressed: () {
-                log('hello');
-              },
-              child: Text(
-                'Exit',
-                style: TextStyle(
-                  fontFamily: 'Press Start 2P',
-                  fontSize: Theme.of(context).textTheme.headlineLarge!.fontSize,
+                const SizedBox(width: 32),
+                ElevatedButton(
+                  onPressed: () {
+                    gameRef.resumeEngine();
+                    gameRef.overlays.remove(PauseMenu.id);
+                    FlameAudio.bgm.resume();
+                  },
+                  child: const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 14.0),
+                    child: Text(
+                      'Continuar',
+                      style: TextStyle(
+                        fontFamily: 'Press Start 2P',
+                        fontSize: 32,
+                      ),
+                    ),
+                  ),
                 ),
-              ),
+              ],
             ),
           ],
         ),

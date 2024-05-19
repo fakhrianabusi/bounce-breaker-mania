@@ -37,7 +37,7 @@ class GameOverMenu extends StatelessWidget {
                     log('hello');
                   },
                   child: const Padding(
-                    padding: EdgeInsets.all(8.0),
+                    padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 14.0),
                     child: Text(
                       'Sair',
                       style: TextStyle(fontSize: 32, fontFamily: 'Press Start 2P'),
@@ -52,7 +52,7 @@ class GameOverMenu extends StatelessWidget {
                     gameRef.reset();
                   },
                   child: const Padding(
-                    padding: EdgeInsets.all(8.0),
+                    padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 14.0),
                     child: Text(
                       'Reiniciar',
                       style: TextStyle(fontSize: 32, fontFamily: 'Press Start 2P'),
