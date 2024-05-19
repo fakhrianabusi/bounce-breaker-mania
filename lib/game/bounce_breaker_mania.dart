@@ -58,6 +58,7 @@ class BounceBreaker extends FlameGame with HasCollisionDetection, DragCallbacks 
 
   GameBlocks _buildGameBlock(int row, int col, int durability) {
     return GameBlocks(
+      hardness: durability,
       color: GameBlocks.getBlockColor(durability),
       durability: durability,
       size: brickSize,

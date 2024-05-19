@@ -12,6 +12,7 @@ import 'power_up.dart';
 class GameBlocks extends RectangleComponent with CollisionCallbacks, HasGameRef<BounceBreaker> {
   GameBlocks({
     required this.durability,
+    required this.hardness,
     required Color color,
     required Vector2 size,
   }) : super(
@@ -21,6 +22,7 @@ class GameBlocks extends RectangleComponent with CollisionCallbacks, HasGameRef<
             ..style = PaintingStyle.fill,
         );
   int durability;
+  int hardness;
   bool hasCollided = false;
   late final TextComponent textComponent;
 
@@ -102,8 +104,8 @@ class GameBlocks extends RectangleComponent with CollisionCallbacks, HasGameRef<
           duration: powerUpDuration,
         );
 
-        // 12% of chance to spawn a power up
-        if (random.nextDouble() < 0.12) {
+        // if hardness is 3, add power up
+        if (durability == 0 && hardness == 3) {
           gameRef.world.add(powerUp);
         }
         removeFromParent();
