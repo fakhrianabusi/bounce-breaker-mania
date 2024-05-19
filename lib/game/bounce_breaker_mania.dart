@@ -4,6 +4,7 @@ import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:flame_audio/flame_audio.dart';
+import 'package:flame_rive/flame_rive.dart';
 import 'package:flutter/material.dart';
 
 import '../configuration/constants.dart';
@@ -12,6 +13,8 @@ import '../custom_widgets/score_manager.dart';
 import '../game_objects/components.dart';
 
 enum GameStatus { initial, playing, paused, nextLevel, gameOver }
+
+late Artboard myArtboard;
 
 class BounceBreaker extends FlameGame with HasCollisionDetection, DragCallbacks {
   BounceBreaker()
@@ -51,6 +54,7 @@ class BounceBreaker extends FlameGame with HasCollisionDetection, DragCallbacks 
     );
 
     final swipeControl = SwipeControlArea(
+      artboards: myArtboard,
       target: stick,
       cornerRadius: const Radius.circular(20),
       size: Vector2(screenWidth * 2, screenHeight * 0.3),
@@ -134,10 +138,12 @@ class BounceBreaker extends FlameGame with HasCollisionDetection, DragCallbacks 
 
   @override
   Future<void> onLoad() async {
-    super.onLoad();
+    final skillsArtboard = loadArtboard(RiveFile.asset('assets/swipe_controller.riv'));
+    myArtboard = await skillsArtboard;
     camera.viewfinder.anchor = Anchor.topLeft;
     world.add(Screen());
     gameState = GameStatus.initial;
+    super.onLoad();
   }
 
   void loadLevel(List<List<int>> level, double offsetX, World world) {

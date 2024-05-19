@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:bounce_breaker/game_objects/components.dart';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
@@ -10,10 +11,6 @@ import '../configuration/constants.dart';
 import '../configuration/screen.dart';
 import '../custom_widgets/game_over_menu.dart';
 import '../game/bounce_breaker_mania.dart';
-import 'block.dart';
-import 'extra_ball_power.dart';
-import 'player_stick.dart';
-import 'power_up.dart';
 
 class Ball extends CircleComponent with CollisionCallbacks, HasGameRef<BounceBreaker> {
   Ball({
@@ -75,6 +72,9 @@ class Ball extends CircleComponent with CollisionCallbacks, HasGameRef<BounceBre
       element.removeFromParent();
     });
     gameRef.world.children.whereType<Trail>().forEach((element) {
+      element.removeFromParent();
+    });
+    gameRef.world.children.whereType<SwipeControlArea>().forEach((element) {
       element.removeFromParent();
     });
     gameRef.scoreManager.currentScore.value = 0;

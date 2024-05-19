@@ -41,6 +41,7 @@ dependencies:
   flame_audio: ^2.10.1
 
   shared_preferences: ^2.2.3
+  flame_rive: ^1.10.1
 
 dev_dependencies:
   flutter_test:
@@ -68,6 +69,7 @@ flutter:
     - assets/images/
     - assets/audio/
     - assets/fonts/
+    - assets/swipe_controller.riv
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
