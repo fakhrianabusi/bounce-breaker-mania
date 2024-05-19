@@ -1,9 +1,8 @@
-import 'package:bounce_breaker/configuration/screen.dart';
+import 'package:bounce_breaker/custom_widgets/initial_screen.dart';
 import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
 import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../configuration/constants.dart';
 import '../custom_widgets/game_over_menu.dart';
@@ -50,54 +49,10 @@ class _FrameState extends State<Frame> {
                     child: GameWidget(
                       game: game,
                       overlayBuilderMap: {
-                        GameStatus.initial.name: (context, BounceBreaker game) => Center(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    textAlign: TextAlign.center,
-                                    'Bounce Breaker Mania',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 60,
-                                      fontFamily: GoogleFonts.orbitron().fontFamily,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 32),
-                                  Text(
-                                    'Melhor pontuação: ${game.scoreManager.highScore.value}',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 32,
-                                      fontFamily: GoogleFonts.orbitron().fontFamily,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 64),
-                                  ElevatedButton(
-                                    onPressed: () async {
-                                      Screen.shouldDrawRectStroke = false;
-                                      game.overlays.add(PauseButton.id);
-                                      FlameAudio.bgm.stop();
-                                      await game.onStarGame();
-                                    },
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(16.0),
-                                      child: Text(
-                                        'Start',
-                                        style: TextStyle(
-                                          fontSize: 40,
-                                          fontFamily: GoogleFonts.orbitron().fontFamily,
-                                          color: Colors.black87,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                        PauseButton.id: (BuildContext ctx, BounceBreaker gameRef) => PauseButton(gameRef: gameRef),
-                        PauseMenu.id: (BuildContext ctx, BounceBreaker gameRef) => PauseMenu(gameRef: gameRef),
-                        GameOverMenu.id: (BuildContext ctx, BounceBreaker gameRef) => GameOverMenu(gameRef: gameRef),
+                        GameStatus.initial.name: (ctx, BounceBreaker gameRef) => InitialScreen(gameRef: gameRef),
+                        PauseButton.id: (ctx, BounceBreaker gameRef) => PauseButton(gameRef: gameRef),
+                        PauseMenu.id: (ctx, BounceBreaker gameRef) => PauseMenu(gameRef: gameRef),
+                        GameOverMenu.id: (ctx, BounceBreaker gameRef) => GameOverMenu(gameRef: gameRef),
                       },
                     ),
                   ),
