@@ -40,26 +40,7 @@ class BounceBreaker extends FlameGame with HasCollisionDetection, DragCallbacks 
     _buildPlayerStick().forEach((component) {
       world.add(component);
     });
-    for (var row = 0; row < level_1.length; row++) {
-      for (var col = 0; col < level_1[row].length; col++) {
-        int durability = level_1[row][col];
-        if (durability == 0) continue;
-        world.add(_buildGameBlock(row, col, durability, lv_1PositionX));
-      }
-    }
-  }
-
-  GameBlocks _buildGameBlock(int row, int col, int durability, double offset) {
-    return GameBlocks(
-      hardness: durability,
-      color: GameBlocks.getBlockColor(durability),
-      durability: durability,
-      size: brickSize,
-    )..position = Vector2(
-          col * (brickSize.x + brickPadding) + brickPadding + offset,
-          row * (brickSize.y + brickPadding) + brickPadding * 2,
-        ) +
-        Vector2(0, height * 0.15); // Offset of the bricks from the top
+    loadLevel(level_1, lv_1PositionX, world);
   }
 
   List<Component> _buildPlayerStick() {
@@ -148,14 +129,7 @@ class BounceBreaker extends FlameGame with HasCollisionDetection, DragCallbacks 
     _buildPlayerStick().forEach((component) {
       world.add(component);
     });
-
-    for (var row = 0; row < level_2.length; row++) {
-      for (var col = 0; col < level_2[row].length; col++) {
-        int durability = level_2[row][col];
-        if (durability == 0) continue;
-        world.add(_buildGameBlock(row, col, durability, lv_2PositionX));
-      }
-    }
+    loadLevel(level_2, lv_2PositionX, world);
   }
 
   @override
@@ -164,5 +138,27 @@ class BounceBreaker extends FlameGame with HasCollisionDetection, DragCallbacks 
     camera.viewfinder.anchor = Anchor.topLeft;
     world.add(Screen());
     gameState = GameStatus.initial;
+  }
+
+  void loadLevel(List<List<int>> level, double offsetX, World world) {
+    for (int row = 0; row < level.length; row++) {
+      for (int col = 0; col < level[row].length; col++) {
+        int durability = level[row][col];
+        if (durability == 0) continue;
+
+        GameBlocks block = GameBlocks(
+          hardness: durability,
+          color: GameBlocks.getBlockColor(durability),
+          durability: durability,
+          size: brickSize,
+        )..position = Vector2(
+              col * (brickSize.x + brickPadding) + brickPadding + offsetX,
+              row * (brickSize.y + brickPadding) + brickPadding * 2,
+            ) +
+            Vector2(0, height * 0.15); // Offset of the bricks from the top
+
+        world.add(block);
+      }
+    }
   }
 }
