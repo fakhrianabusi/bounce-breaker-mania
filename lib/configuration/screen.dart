@@ -22,6 +22,7 @@ class Screen extends RectangleComponent with HasGameRef<BounceBreaker> {
 
   late final TextBoxComponent scoreCard;
   late final SpriteComponent background;
+  static bool shouldDrawRectStroke = true;
 
   final Paint strokePaint = Paint()
     ..shader = const LinearGradient(
@@ -37,7 +38,7 @@ class Screen extends RectangleComponent with HasGameRef<BounceBreaker> {
         Colors.orange,
         Colors.red
       ],
-    ).createShader(const Rect.fromLTWH(0, 0, screenWidth, screenHeight))
+    ).createShader(Rect.fromLTWH(0, 0, screenWidth, screenHeight))
     ..style = PaintingStyle.stroke
     ..strokeCap = StrokeCap.round
     ..strokeWidth = 10
@@ -72,9 +73,10 @@ class Screen extends RectangleComponent with HasGameRef<BounceBreaker> {
   @override
   void render(Canvas canvas) {
     super.render(canvas);
-    const rect = Rect.fromLTWH(0, 0, screenWidth, screenHeight);
-    canvas.drawRect(rect, strokePaint);
-    // canvas.drawRect(size.toRect(), strokePaint);
+    final rect = Rect.fromLTWH(100, 300, screenWidth - 200, screenHeight - 600);
+    if (shouldDrawRectStroke) {
+      canvas.drawRect(rect, strokePaint);
+    }
   }
 
   @override
