@@ -47,8 +47,9 @@ List<List<int>> level_2 = [
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 ];
 
-final level_1Position = level_1[0].length * (brickSize.x + bickPadding) - bickPadding;
-final level_2Position = level_2[0].length * (brickSize.x + bickPadding) - bickPadding;
+double calculateLevelCenter(List<List<int>> level) {
+  return level[0].length * (brickSize.x + bickPadding) - bickPadding;
+}
 
 double convertRadiusToSigma(double radius) {
   return radius * 0.57735 + 0.5;

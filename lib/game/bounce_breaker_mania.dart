@@ -37,7 +37,7 @@ class BounceBreaker extends FlameGame with HasCollisionDetection, DragCallbacks 
   double get height => size.y;
 
   // Offset of the bricks from the left we will need to adjust this based on the levels
-  final offsetX = (screenWidth - level_2Position) / 2;
+  final offsetX = (screenWidth - calculateLevelCenter(level_2)) / 2;
 
   Future<void> reset() async {
     FlameAudio.bgm.stop();
