@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 
 import 'package:flame/components.dart';
+import 'package:flame/effects.dart' as flame_effects;
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:flame_audio/flame_audio.dart';
@@ -30,6 +31,13 @@ class BounceBreaker extends FlameGame with HasCollisionDetection, DragCallbacks 
   late SpriteComponent ballCount;
   late SpriteComponent stickSize;
   late SpriteComponent ballSpeed;
+
+  // ...
+
+  late final screenShake = flame_effects.MoveEffect.by(
+    Vector2(0, 5),
+    flame_effects.InfiniteEffectController(flame_effects.SineEffectController(period: 0.2)),
+  );
 
   double get width => size.x;
 
@@ -141,6 +149,8 @@ class BounceBreaker extends FlameGame with HasCollisionDetection, DragCallbacks 
     final skillsArtboard = loadArtboard(RiveFile.asset('assets/swipe_controller.riv'));
     myArtboard = await skillsArtboard;
     camera.viewfinder.anchor = Anchor.topLeft;
+    await camera.viewfinder.add(screenShake);
+    screenShake.pause();
     world.add(Screen());
     gameState = GameStatus.initial;
     super.onLoad();

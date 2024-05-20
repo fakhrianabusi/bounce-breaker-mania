@@ -99,8 +99,12 @@ class Ball extends CircleComponent with CollisionCallbacks, HasGameRef<BounceBre
         add(RemoveEffect(
           delay: 0.35,
         ));
+        game.screenShake.resume();
         FlameAudio.bgm.stop();
-        gameOver();
+        Future.delayed(const Duration(milliseconds: 500), () {
+          gameOver();
+          game.screenShake.pause();
+        });
       }
     } else if (other is PlayerStick) {
       velocity.y = -velocity.y;
