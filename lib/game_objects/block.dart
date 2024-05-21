@@ -57,7 +57,9 @@ class GameBlocks extends RectangleComponent with CollisionCallbacks, HasGameRef<
 
     await add(textComponent);
 
-    await add(RectangleHitbox());
+    await add(RectangleHitbox(
+      size: size,
+    ));
   }
 
   @override

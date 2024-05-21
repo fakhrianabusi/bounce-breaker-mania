@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
@@ -11,7 +13,7 @@ import 'player_stick.dart';
 class SwipeControlArea extends RiveComponent with DragCallbacks, TapCallbacks, HasGameRef<BounceBreaker> {
   final Artboard artboards;
   final PlayerStick target;
-  SMIInput<double>? _levelInput;
+  late SMIBool trigger;
   SwipeControlArea({
     required this.target,
     required this.cornerRadius,
@@ -51,25 +53,22 @@ class SwipeControlArea extends RiveComponent with DragCallbacks, TapCallbacks, H
   }
 
   @override
-  void onLoad() {
+  void onLoad() async {
+    super.onLoad();
+
     final controller = StateMachineController.fromArtboard(
       artboard,
-      "initState",
-    );
-    if (controller != null) {
-      artboard.addController(controller);
-      _levelInput = controller.findInput('press');
-      _levelInput?.value = 0;
-    }
+      "statemachine",
+    )!;
+
+    trigger = controller.findSMI<SMIBool>('swiped')!;
+    artboard.addController(controller);
   }
 
   @override
   void onTapDown(TapDownEvent event) {
-    final levelInput = _levelInput;
-    if (levelInput == null) {
-      return;
-    }
-    levelInput.value = (levelInput.value + 1) % 3;
+    log('Tap Tapped');
+    trigger.value = true;
   }
 
   void moveBy(double dx) {

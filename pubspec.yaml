@@ -69,7 +69,10 @@ flutter:
     - assets/images/
     - assets/audio/
     - assets/fonts/
-    - assets/swipe_controller.riv
+    - assets/swipe_rive.riv
+    - assets/swipe_controller2.riv
+    - assets/test.riv
+    - assets/images/ahit.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

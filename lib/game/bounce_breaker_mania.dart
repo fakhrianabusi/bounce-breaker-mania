@@ -146,14 +146,14 @@ class BounceBreaker extends FlameGame with HasCollisionDetection, DragCallbacks 
 
   @override
   Future<void> onLoad() async {
-    final skillsArtboard = loadArtboard(RiveFile.asset('assets/swipe_controller.riv'));
+    super.onLoad();
+    final skillsArtboard = loadArtboard(RiveFile.asset('assets/test.riv'));
     myArtboard = await skillsArtboard;
     camera.viewfinder.anchor = Anchor.topLeft;
     await camera.viewfinder.add(screenShake);
     screenShake.pause();
     world.add(Screen());
     gameState = GameStatus.initial;
-    super.onLoad();
   }
 
   void loadLevel(List<List<int>> level, double offsetX, World world) {

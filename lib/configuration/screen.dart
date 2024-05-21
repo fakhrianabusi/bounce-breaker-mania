@@ -14,9 +14,7 @@ class Screen extends RectangleComponent with HasGameRef<BounceBreaker> {
       : super(
           paint: Paint()..color = screenColor,
           children: [
-            RectangleHitbox(
-              collisionType: CollisionType.active,
-            ),
+            RectangleHitbox(),
           ],
         );
 

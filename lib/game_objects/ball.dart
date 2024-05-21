@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:bounce_breaker/game_objects/components.dart';
+import 'package:bounce_breaker/game_objects/hit_effect.dart';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
@@ -87,6 +88,7 @@ class Ball extends CircleComponent with CollisionCallbacks, HasGameRef<BounceBre
   @override
   void onCollisionStart(Set<Vector2> intersectionPoints, PositionComponent other) {
     super.onCollisionStart(intersectionPoints, other);
+
     if (other is Screen) {
       if (intersectionPoints.first.y <= 0) {
         velocity.y = -velocity.y;
@@ -107,6 +109,7 @@ class Ball extends CircleComponent with CollisionCallbacks, HasGameRef<BounceBre
         });
       }
     } else if (other is PlayerStick) {
+      gameRef.add(HitSpriteEffect(position: position.clone()));
       velocity.y = -velocity.y;
       velocity.x = velocity.x + (position.x - other.position.x) / other.size.x * game.width * 0.3;
     } else if (other is GameBlocks) {
