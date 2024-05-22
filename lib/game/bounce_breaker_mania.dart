@@ -12,6 +12,7 @@ import '../configuration/constants.dart';
 import '../configuration/screen.dart';
 import '../custom_widgets/score_manager.dart';
 import '../game_objects/components.dart';
+import '../game_objects/waves.dart';
 
 enum GameStatus { initial, playing, paused, nextLevel, gameOver }
 
@@ -142,6 +143,12 @@ class BounceBreaker extends FlameGame with HasCollisionDetection, DragCallbacks 
       world.add(component);
     });
     loadLevel(level_2, lv_2PositionX, world);
+    final lavaHeight = size.y * 0.2;
+    final lavaComponent = LavaComponent()
+      ..size = Vector2(size.x, lavaHeight)
+      ..position = Vector2(0, size.y - lavaHeight)
+      ..anchor = Anchor.topLeft;
+    add(lavaComponent);
   }
 
   @override
