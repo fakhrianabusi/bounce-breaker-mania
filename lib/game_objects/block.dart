@@ -62,16 +62,17 @@ class GameBlocks extends RectangleComponent with CollisionCallbacks, HasGameRef<
 
     await add(textComponent);
 
-    await add(RectangleHitbox(
-      size: size,
-    ));
+    await add(RectangleHitbox(size: size));
   }
 
   @override
   void update(double dt) {
     if (hasCollided) {
       textComponent.text = '$durability';
+      hasCollided = false;
     }
+
+    super.update(dt);
   }
 
   Sprite selecSpritebyPowerUpType(PowerUpType type) {
@@ -86,7 +87,8 @@ class GameBlocks extends RectangleComponent with CollisionCallbacks, HasGameRef<
   }
 
   @override
-  void onCollisionStart(Set<Vector2> intersectionPoints, PositionComponent other) {
+  void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
+    super.onCollision(intersectionPoints, other);
     if (other is Ball || other is ExtraBall && !hasCollided) {
       hasCollided = true;
 
@@ -125,13 +127,5 @@ class GameBlocks extends RectangleComponent with CollisionCallbacks, HasGameRef<
         ..style = PaintingStyle.fill;
     }
     super.onCollisionStart(intersectionPoints, other);
-  }
-
-  @override
-  void onCollisionEnd(PositionComponent other) {
-    if (hasCollided) {
-      hasCollided = false;
-    }
-    super.onCollisionEnd(other);
   }
 }

@@ -161,7 +161,6 @@ class BounceBreaker extends FlameGame with HasCollisionDetection, DragCallbacks 
     screenShake.pause();
     world.add(Screen());
     gameState = GameStatus.initial;
-    debugMode = true;
   }
 
   void loadLevel(List<List<int>> level, double offsetX, World world) {
