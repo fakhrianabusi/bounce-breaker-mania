@@ -19,7 +19,7 @@ class HitSpriteEffect extends SpriteAnimationComponent with HasGameRef<BounceBre
       SpriteAnimationData.sequenced(
         amount: 29,
         stepTime: .05,
-        textureSize: Vector2(291, 300),
+        textureSize: Vector2(291, 301),
         loop: false,
       ),
     );

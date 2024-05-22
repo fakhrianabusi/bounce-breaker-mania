@@ -5,7 +5,7 @@ class ExplosionEffect extends SpriteAnimationComponent with HasGameRef<BounceBre
   ExplosionEffect({
     super.position,
   }) : super(
-          size: Vector2.all(300),
+          size: Vector2.all(400),
           anchor: Anchor.center,
           removeOnFinish: true,
         );
@@ -15,11 +15,11 @@ class ExplosionEffect extends SpriteAnimationComponent with HasGameRef<BounceBre
     await super.onLoad();
 
     animation = await game.loadSpriteAnimation(
-      'explode.png',
+      'sparks.png',
       SpriteAnimationData.sequenced(
-        amount: 10,
+        amount: 29,
         stepTime: .05,
-        textureSize: Vector2(200, 200),
+        textureSize: Vector2(96, 96),
         loop: false,
       ),
     );

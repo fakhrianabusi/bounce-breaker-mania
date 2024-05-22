@@ -23,10 +23,10 @@ if (flutterVersionName == null) {
 }
 
 android {
-    ndkVersion "25.1.8937393"
+    
     namespace "com.example.bounce_breaker"
     compileSdk flutter.compileSdkVersion
-    ndkVersion flutter.ndkVersion
+    ndkVersion rootProject.ext.ndkVersion
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
