@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:bounce_breaker/game_objects/components.dart';
+import 'package:bounce_breaker/game_objects/explosion_effect.dart';
 import 'package:bounce_breaker/game_objects/hit_effect.dart';
 import 'package:bounce_breaker/game_objects/lava.dart';
 import 'package:flame/collisions.dart';
@@ -126,6 +127,9 @@ class Ball extends CircleComponent with CollisionCallbacks, HasGameRef<BounceBre
       }
       velocity.setFrom(velocity * difficultyModifier);
     } else if (other is LavaComponent) {
+      gameRef.add(ExplosionEffect(
+        position: position.clone(),
+      ));
       add(RemoveEffect(
         delay: 0.35,
       ));

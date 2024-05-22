@@ -5,7 +5,10 @@ import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
 
 class LavaComponent extends PositionComponent with CollisionCallbacks {
-  LavaComponent();
+  LavaComponent()
+      : super(
+          priority: 100001,
+        );
 
   @override
   void render(Canvas canvas) {

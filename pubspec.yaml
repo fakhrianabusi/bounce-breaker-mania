@@ -71,6 +71,7 @@ flutter:
     - assets/fonts/
     - assets/test.riv
     - assets/images/ahit.png
+    - assets/images/explode.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
