@@ -19,7 +19,12 @@ class GameBlocks extends RectangleComponent with CollisionCallbacks, HasGameRef<
           size: size, // block size
           paint: Paint()
             ..color = color
-            ..style = PaintingStyle.fill,
+            ..style = PaintingStyle.fill
+            ..shader = LinearGradient(
+              colors: [color, color, color.withOpacity(0.5)],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+            ).createShader(Rect.fromLTWH(0, 0, size.x, size.y)),
         );
   int durability;
   int hardness;

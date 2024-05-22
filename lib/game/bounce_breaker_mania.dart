@@ -12,7 +12,7 @@ import '../configuration/constants.dart';
 import '../configuration/screen.dart';
 import '../custom_widgets/score_manager.dart';
 import '../game_objects/components.dart';
-import '../game_objects/waves.dart';
+import '../game_objects/lava.dart';
 
 enum GameStatus { initial, playing, paused, nextLevel, gameOver }
 
@@ -143,7 +143,7 @@ class BounceBreaker extends FlameGame with HasCollisionDetection, DragCallbacks 
       world.add(component);
     });
     loadLevel(level_2, lv_2PositionX, world);
-    final lavaHeight = size.y * 0.2;
+    final lavaHeight = size.y * 0.2; // 20% of the screen height
     final lavaComponent = LavaComponent()
       ..size = Vector2(size.x, lavaHeight)
       ..position = Vector2(0, size.y - lavaHeight)
@@ -161,6 +161,7 @@ class BounceBreaker extends FlameGame with HasCollisionDetection, DragCallbacks 
     screenShake.pause();
     world.add(Screen());
     gameState = GameStatus.initial;
+    debugMode = true;
   }
 
   void loadLevel(List<List<int>> level, double offsetX, World world) {
