@@ -117,6 +117,7 @@ class GameBlocks extends RectangleComponent with CollisionCallbacks, HasGameRef<
         }
         if (durability == 0 && game.world.children.query<GameBlocks>().length == 1) {
           game.gameState = GameStatus.nextLevel;
+          levelCounter.value++;
           debugPrint('Next Level');
           game.world.removeAll(game.world.children.query<Ball>());
           game.world.removeAll(game.world.children.query<PlayerStick>());

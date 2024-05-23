@@ -17,6 +17,7 @@ import '../game_objects/lava.dart';
 enum GameStatus { initial, playing, paused, nextLevel, gameOver }
 
 late Artboard myArtboard;
+ValueNotifier<int> levelCounter = ValueNotifier<int>(0);
 
 class BounceBreaker extends FlameGame with HasCollisionDetection, DragCallbacks, TapDetector {
   BounceBreaker()
@@ -45,6 +46,7 @@ class BounceBreaker extends FlameGame with HasCollisionDetection, DragCallbacks,
   double get height => size.y;
 
   Future<void> reset() async {
+    levelCounter.value = 0;
     FlameAudio.bgm.stop();
     FlameAudio.bgm.play('arcade.mp3');
 
@@ -154,7 +156,6 @@ class BounceBreaker extends FlameGame with HasCollisionDetection, DragCallbacks,
   @override
   Future<void> onLoad() async {
     super.onLoad();
-
     await FlameAudio.audioCache.loadAll(['game_over.ogg', 'game_over_drama.ogg', 'arcade.ogg', 'menu_music.ogg']);
 
     FlameAudio.bgm.initialize();
@@ -219,7 +220,12 @@ class BounceBreaker extends FlameGame with HasCollisionDetection, DragCallbacks,
       _buildPlayerStick().forEach((component) {
         world.add(component);
       });
-      loadLevel(level_2, lv_2PositionX, world);
+
+      if (levelCounter.value == 1) {
+        loadLevel(level_2, lv_2PositionX, world);
+      } else if (levelCounter.value == 2) {
+        loadLevel(level_3, lv_3PositionX, world);
+      }
     }
   }
 }
