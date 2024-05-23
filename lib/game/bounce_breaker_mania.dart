@@ -46,7 +46,7 @@ class BounceBreaker extends FlameGame with HasCollisionDetection, DragCallbacks 
 
   Future<void> reset() async {
     FlameAudio.bgm.stop();
-    FlameAudio.bgm.play('arcade.mp3', volume: 0.5);
+    FlameAudio.bgm.play('arcade.mp3');
 
     world.add(_buildBall());
     _buildPlayerStick().forEach((component) {
@@ -137,7 +137,7 @@ class BounceBreaker extends FlameGame with HasCollisionDetection, DragCallbacks 
     );
 
     FlameAudio.bgm.stop();
-    FlameAudio.bgm.play('arcade.mp3', volume: 0.5);
+    FlameAudio.bgm.play('arcade.mp3');
     world.add(_buildBall());
     _buildPlayerStick().forEach((component) {
       world.add(component);
@@ -154,13 +154,28 @@ class BounceBreaker extends FlameGame with HasCollisionDetection, DragCallbacks 
   @override
   Future<void> onLoad() async {
     super.onLoad();
+
+    await FlameAudio.audioCache.loadAll(['game_over.ogg', 'game_over_drama.ogg', 'arcade.ogg', 'menu_music.ogg']);
+
+    FlameAudio.bgm.initialize();
+
     final skillsArtboard = loadArtboard(RiveFile.asset('assets/test.riv'));
     myArtboard = await skillsArtboard;
+
     camera.viewfinder.anchor = Anchor.topLeft;
+
     await camera.viewfinder.add(screenShake);
     screenShake.pause();
+
     world.add(Screen());
     gameState = GameStatus.initial;
+  }
+
+  @override
+  void onDispose() {
+    FlameAudio.bgm.stop();
+    FlameAudio.bgm.dispose();
+    super.onDispose();
   }
 
   void loadLevel(List<List<int>> level, double offsetX, World world) {
