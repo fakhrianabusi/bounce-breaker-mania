@@ -83,10 +83,10 @@ class Ball extends CircleComponent with CollisionCallbacks, HasGameRef<BounceBre
     gameRef.scoreManager.currentScore.value = 0;
 
     FlameAudio.bgm.stop();
-    FlameAudio.bgm.play('game_over.mp3');
+    FlameAudio.bgm.play('game_over.ogg');
     Future.delayed(const Duration(seconds: 3), () {
-      FlameAudio.bgm.play('game_over_drama.mp3');
       FlameAudio.bgm.stop();
+      FlameAudio.bgm.play('game_over_drama.ogg');
     });
 
     gameRef.overlays.add(GameOverMenu.id);

@@ -155,7 +155,7 @@ class BounceBreaker extends FlameGame with HasCollisionDetection, DragCallbacks 
   Future<void> onLoad() async {
     super.onLoad();
 
-    await FlameAudio.audioCache.loadAll(['game_over.mp3', 'game_over_drama.mp3', 'arcade.mp3', 'menu_music.ogg']);
+    await FlameAudio.audioCache.loadAll(['game_over.ogg', 'game_over_drama.ogg', 'arcade.ogg', 'menu_music.ogg']);
 
     FlameAudio.bgm.initialize();
 
