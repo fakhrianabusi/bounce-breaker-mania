@@ -112,7 +112,7 @@ class GameBlocks extends RectangleComponent with CollisionCallbacks, HasGameRef<
         );
 
         // if hardness is 3, add power up
-        if (durability == 0 && hardness == 3) {
+        if (durability == 0 && hardness >= 2) {
           gameRef.world.add(powerUp);
         }
         if (durability == 0 && game.world.children.query<GameBlocks>().length == 1) {

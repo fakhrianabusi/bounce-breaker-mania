@@ -79,7 +79,7 @@ class PlayerStick extends PositionComponent with DragCallbacks, HasGameRef<Bounc
   }
 
   void removeExtraBalls() {
-    game.children.whereType<Ball>().forEach((ball) {
+    game.children.whereType<ExtraBall>().forEach((ball) {
       ball.removeFromParent();
     });
   }

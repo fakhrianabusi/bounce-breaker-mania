@@ -65,7 +65,6 @@ class ExtraBall extends CircleComponent with CollisionCallbacks, HasGameRef<Boun
     if (other is Screen) {
       if (intersectionPoints.first.y <= 0) {
         velocity.y = -velocity.y;
-        velocity.setFrom(velocity - velocity * 0.3);
       } else if (intersectionPoints.first.x <= 0) {
         velocity.x = -velocity.x;
       } else if (intersectionPoints.first.x >= game.width) {
