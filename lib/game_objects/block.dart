@@ -116,10 +116,11 @@ class GameBlocks extends RectangleComponent with CollisionCallbacks, HasGameRef<
           gameRef.world.add(powerUp);
         }
         if (durability == 0 && game.world.children.query<GameBlocks>().length == 1) {
-      debugPrint('Next Level');
-      game.world.removeAll(game.world.children.query<Ball>());
-      game.world.removeAll(game.world.children.query<PlayerStick>());
-    }
+          game.gameState = GameStatus.nextLevel;
+          debugPrint('Next Level');
+          game.world.removeAll(game.world.children.query<Ball>());
+          game.world.removeAll(game.world.children.query<PlayerStick>());
+        }
         removeFromParent();
         return;
       }
@@ -129,7 +130,7 @@ class GameBlocks extends RectangleComponent with CollisionCallbacks, HasGameRef<
         ..color = getBlockColor(durability)
         ..style = PaintingStyle.fill;
     }
-    
+
     super.onCollisionStart(intersectionPoints, other);
   }
 }

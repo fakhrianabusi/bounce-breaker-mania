@@ -1,4 +1,5 @@
 import 'package:bounce_breaker/custom_widgets/initial_screen.dart';
+import 'package:bounce_breaker/widgets/levels_overlay.dart';
 import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
 import 'package:flame_audio/flame_audio.dart';
@@ -53,6 +54,10 @@ class _FrameState extends State<Frame> {
                         PauseButton.id: (ctx, BounceBreaker gameRef) => PauseButton(gameRef: gameRef),
                         PauseMenu.id: (ctx, BounceBreaker gameRef) => PauseMenu(gameRef: gameRef),
                         GameOverMenu.id: (ctx, BounceBreaker gameRef) => GameOverMenu(gameRef: gameRef),
+                        GameStatus.nextLevel.name: (ctx, BounceBreaker gameRef) => const LevelsOverlays(
+                              title: 'PROXIMA FASE',
+                              subtitle: 'TOQUE PARA CONTINUAR',
+                            ),
                       },
                     ),
                   ),

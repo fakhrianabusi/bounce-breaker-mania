@@ -18,7 +18,7 @@ enum GameStatus { initial, playing, paused, nextLevel, gameOver }
 
 late Artboard myArtboard;
 
-class BounceBreaker extends FlameGame with HasCollisionDetection, DragCallbacks {
+class BounceBreaker extends FlameGame with HasCollisionDetection, DragCallbacks, TapDetector {
   BounceBreaker()
       : super(
           camera: CameraComponent.withFixedResolution(
@@ -172,6 +172,12 @@ class BounceBreaker extends FlameGame with HasCollisionDetection, DragCallbacks 
   }
 
   @override
+  void onTap() {
+    super.onTap();
+    nextLevel();
+  }
+
+  @override
   void onDispose() {
     FlameAudio.bgm.stop();
     FlameAudio.bgm.dispose();
@@ -197,6 +203,23 @@ class BounceBreaker extends FlameGame with HasCollisionDetection, DragCallbacks 
 
         world.add(block);
       }
+    }
+  }
+
+  void nextLevel() {
+    if (gameState == GameStatus.nextLevel) {
+      gameState = GameStatus.playing;
+      world.removeAll(world.children.query<GameBlocks>());
+      world.removeAll(world.children.query<Ball>());
+      world.removeAll(world.children.query<PlayerStick>());
+      world.removeAll(world.children.query<SwipeControlArea>());
+      world.removeAll(world.children.query<ExtraBall>());
+
+      world.add(_buildBall());
+      _buildPlayerStick().forEach((component) {
+        world.add(component);
+      });
+      loadLevel(level_2, lv_2PositionX, world);
     }
   }
 }
