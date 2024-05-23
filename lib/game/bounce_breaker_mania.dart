@@ -142,7 +142,7 @@ class BounceBreaker extends FlameGame with HasCollisionDetection, DragCallbacks 
     _buildPlayerStick().forEach((component) {
       world.add(component);
     });
-    loadLevel(level_2, lv_2PositionX, world);
+    loadLevel(level_1, lv_1PositionX, world);
     final lavaHeight = size.y * 0.2; // 20% of the screen height
     final lavaComponent = LavaComponent()
       ..size = Vector2(size.x, lavaHeight)

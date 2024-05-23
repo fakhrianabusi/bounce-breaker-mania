@@ -1,13 +1,11 @@
 import 'dart:math';
 
+import 'package:bounce_breaker/game_objects/components.dart';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
 
 import '../game/bounce_breaker_mania.dart';
-import 'ball.dart';
-import 'extra_ball_power.dart';
-import 'power_up.dart';
 
 class GameBlocks extends RectangleComponent with CollisionCallbacks, HasGameRef<BounceBreaker> {
   GameBlocks({
@@ -117,6 +115,11 @@ class GameBlocks extends RectangleComponent with CollisionCallbacks, HasGameRef<
         if (durability == 0 && hardness == 3) {
           gameRef.world.add(powerUp);
         }
+        if (durability == 0 && game.world.children.query<GameBlocks>().length == 1) {
+      debugPrint('Next Level');
+      game.world.removeAll(game.world.children.query<Ball>());
+      game.world.removeAll(game.world.children.query<PlayerStick>());
+    }
         removeFromParent();
         return;
       }
@@ -126,6 +129,7 @@ class GameBlocks extends RectangleComponent with CollisionCallbacks, HasGameRef<
         ..color = getBlockColor(durability)
         ..style = PaintingStyle.fill;
     }
+    
     super.onCollisionStart(intersectionPoints, other);
   }
 }

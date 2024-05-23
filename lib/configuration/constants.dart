@@ -24,8 +24,18 @@ final Map<int, Color> blockColors = {
 };
 
 //levels
-
 List<List<int>> level_1 = [
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 1, 0, 0],
+  [0, 1, 0, 1, 1, 1, 0, 1, 0],
+  [0, 0, 1, 1, 1, 1, 1, 0, 0],
+  [0, 1, 1, 1, 1, 0, 1, 0, 0],
+];
+final lv_1PositionX = (screenWidth - calculateLevelCenter(level_1)) / 2;
+
+List<List<int>> level_2 = [
   [0, 0, 2, 1, 0, 1, 1, 0, 0],
   [0, 1, 1, 2, 1, 2, 1, 1, 0],
   [1, 2, 1, 1, 1, 1, 1, 2, 1],
@@ -34,9 +44,9 @@ List<List<int>> level_1 = [
   [0, 0, 1, 2, 1, 1, 1, 0, 0],
   [0, 0, 0, 1, 1, 2, 0, 0, 0],
 ];
-final lv_1PositionX = (screenWidth - calculateLevelCenter(level_1)) / 2;
+final lv_2PositionX = (screenWidth - calculateLevelCenter(level_2)) / 2;
 
-List<List<int>> level_2 = [
+List<List<int>> level_3 = [
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0],
   [0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0],
@@ -50,7 +60,7 @@ List<List<int>> level_2 = [
   [0, 0, 0, 0, 3, 3, 0, 0, 3, 3, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 ];
-final lv_2PositionX = (screenWidth - calculateLevelCenter(level_2)) / 2;
+final lv_3PositionX = (screenWidth - calculateLevelCenter(level_3)) / 2;
 
 double calculateLevelCenter(List<List<int>> level) {
   return level[0].length * (brickSize.x + brickPadding) - brickPadding;
