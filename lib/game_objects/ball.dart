@@ -82,8 +82,13 @@ class Ball extends CircleComponent with CollisionCallbacks, HasGameRef<BounceBre
     });
     gameRef.scoreManager.currentScore.value = 0;
 
-    FlameAudio.play('game_over.mp3');
-    FlameAudio.bgm.play('game_over_drama.mp3');
+    FlameAudio.bgm.stop();
+    FlameAudio.bgm.play('game_over.mp3');
+    Future.delayed(const Duration(seconds: 3), () {
+      FlameAudio.bgm.play('game_over_drama.mp3');
+      FlameAudio.bgm.stop();
+    });
+
     gameRef.overlays.add(GameOverMenu.id);
   }
 
@@ -134,7 +139,7 @@ class Ball extends CircleComponent with CollisionCallbacks, HasGameRef<BounceBre
         delay: 0.35,
       ));
       game.screenShake.resume();
-      FlameAudio.bgm.stop();
+
       Future.delayed(const Duration(milliseconds: 500), () {
         gameOver();
         game.screenShake.pause();
