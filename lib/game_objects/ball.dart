@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:bounce_breaker/configuration/audio_manager.dart';
 import 'package:bounce_breaker/game_objects/components.dart';
 import 'package:bounce_breaker/game_objects/explosion_effect.dart';
 import 'package:bounce_breaker/game_objects/hit_effect.dart';
@@ -21,6 +22,7 @@ class Ball extends CircleComponent with CollisionCallbacks, HasGameRef<BounceBre
     required super.position,
     required double radius,
     required this.difficultyModifier,
+    required this.collisionSoundPool,
   }) : super(
           radius: radius,
           anchor: Anchor.center,
@@ -32,7 +34,7 @@ class Ball extends CircleComponent with CollisionCallbacks, HasGameRef<BounceBre
         );
   Vector2 velocity;
   final double difficultyModifier;
-
+  final AudioPool collisionSoundPool;
   final Map<int, Trail> _trails = {};
 
   @override
@@ -82,13 +84,10 @@ class Ball extends CircleComponent with CollisionCallbacks, HasGameRef<BounceBre
     });
     gameRef.scoreManager.currentScore.value = 0;
 
-    FlameAudio.bgm.stop();
-    FlameAudio.bgm.play('game_over.ogg');
     Future.delayed(const Duration(seconds: 3), () {
-      FlameAudio.bgm.stop();
-      FlameAudio.bgm.play('game_over_drama.ogg');
+      AudioManager().playBgm('game_over_drama.ogg');
+      collisionSoundPool.dispose();
     });
-
     gameRef.overlays.add(GameOverMenu.id);
   }
 
@@ -138,8 +137,9 @@ class Ball extends CircleComponent with CollisionCallbacks, HasGameRef<BounceBre
       add(RemoveEffect(
         delay: 0.35,
       ));
+      collisionSoundPool.start();
       game.screenShake.resume();
-
+      AudioManager().stopBgm();
       Future.delayed(const Duration(milliseconds: 500), () {
         gameOver();
         game.screenShake.pause();

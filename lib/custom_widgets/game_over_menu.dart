@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:bounce_breaker/configuration/audio_manager.dart';
 import 'package:flutter/material.dart';
 
 import '../game/bounce_breaker_mania.dart';
@@ -48,6 +49,7 @@ class GameOverMenu extends StatelessWidget {
                 ElevatedButton(
                   style: ButtonStyle(foregroundColor: MaterialStateProperty.all(Colors.black87)),
                   onPressed: () {
+                    AudioManager().stopBgm();
                     gameRef.overlays.remove(GameOverMenu.id);
                     gameRef.reset();
                   },

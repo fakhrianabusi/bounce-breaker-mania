@@ -1,6 +1,5 @@
 import 'dart:developer';
 
-import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
 
 import '../game/bounce_breaker_mania.dart';
@@ -43,7 +42,6 @@ class PauseMenu extends StatelessWidget {
                   onPressed: () {
                     gameRef.resumeEngine();
                     gameRef.overlays.remove(PauseMenu.id);
-                    FlameAudio.bgm.resume();
                   },
                   child: const Padding(
                     padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 14.0),

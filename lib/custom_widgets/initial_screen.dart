@@ -1,7 +1,7 @@
+import 'package:bounce_breaker/configuration/audio_manager.dart';
 import 'package:bounce_breaker/configuration/screen.dart';
 import 'package:bounce_breaker/custom_widgets/pause_button.dart';
 import 'package:bounce_breaker/game/bounce_breaker_mania.dart';
-import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -45,9 +45,9 @@ class InitialScreen extends StatelessWidget {
           const SizedBox(height: 64),
           ElevatedButton(
             onPressed: () async {
+              AudioManager().stopBgm();
               Screen.shouldDrawRectStroke = false;
               gameRef.overlays.add(PauseButton.id);
-              FlameAudio.bgm.stop();
               await gameRef.onStarGame();
             },
             child: Padding(

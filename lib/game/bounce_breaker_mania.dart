@@ -1,5 +1,6 @@
 import 'dart:math' as math;
 
+import 'package:bounce_breaker/configuration/audio_manager.dart';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart' as flame_effects;
 import 'package:flame/events.dart';
@@ -20,6 +21,7 @@ late Artboard myArtboard;
 ValueNotifier<int> levelCounter = ValueNotifier<int>(0);
 
 class BounceBreaker extends FlameGame with HasCollisionDetection, DragCallbacks, TapDetector {
+  late AudioPool collisionSoundPool;
   BounceBreaker()
       : super(
           camera: CameraComponent.withFixedResolution(
@@ -46,9 +48,8 @@ class BounceBreaker extends FlameGame with HasCollisionDetection, DragCallbacks,
   double get height => size.y;
 
   Future<void> reset() async {
+    AudioManager().playBgm('arcade.ogg');
     levelCounter.value = 0;
-    FlameAudio.bgm.stop();
-    FlameAudio.bgm.play('arcade.mp3');
 
     world.add(_buildBall());
     _buildPlayerStick().forEach((component) {
@@ -77,6 +78,7 @@ class BounceBreaker extends FlameGame with HasCollisionDetection, DragCallbacks,
 
   Ball _buildBall() {
     return Ball(
+      collisionSoundPool: collisionSoundPool,
       difficultyModifier: difficultyModifier,
       radius: ballRadius,
       position: size / 2,
@@ -138,8 +140,6 @@ class BounceBreaker extends FlameGame with HasCollisionDetection, DragCallbacks,
       anchor: Anchor.center,
     );
 
-    FlameAudio.bgm.stop();
-    FlameAudio.bgm.play('arcade.mp3');
     world.add(_buildBall());
     _buildPlayerStick().forEach((component) {
       world.add(component);
@@ -151,15 +151,14 @@ class BounceBreaker extends FlameGame with HasCollisionDetection, DragCallbacks,
       ..position = Vector2(0, size.y - lavaHeight)
       ..anchor = Anchor.topLeft;
     add(lavaComponent);
+    AudioManager().playBgm('arcade.ogg');
   }
 
   @override
   Future<void> onLoad() async {
     super.onLoad();
     await FlameAudio.audioCache.loadAll(['game_over.ogg', 'game_over_drama.ogg', 'arcade.ogg', 'menu_music.ogg']);
-
-    FlameAudio.bgm.initialize();
-
+    collisionSoundPool = await FlameAudio.createPool('game_over.ogg', maxPlayers: 1);
     final skillsArtboard = loadArtboard(RiveFile.asset('assets/test.riv'));
     myArtboard = await skillsArtboard;
 
@@ -176,13 +175,6 @@ class BounceBreaker extends FlameGame with HasCollisionDetection, DragCallbacks,
   void onTap() {
     super.onTap();
     nextLevel();
-  }
-
-  @override
-  void onDispose() {
-    FlameAudio.bgm.stop();
-    FlameAudio.bgm.dispose();
-    super.onDispose();
   }
 
   void loadLevel(List<List<int>> level, double offsetX, World world) {

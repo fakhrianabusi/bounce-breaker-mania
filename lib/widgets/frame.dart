@@ -1,8 +1,8 @@
+import 'package:bounce_breaker/configuration/audio_manager.dart';
 import 'package:bounce_breaker/custom_widgets/initial_screen.dart';
 import 'package:bounce_breaker/widgets/levels_overlay.dart';
 import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
-import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
 
 import '../configuration/constants.dart';
@@ -23,14 +23,19 @@ class _FrameState extends State<Frame> {
 
   @override
   void initState() {
-    FlameAudio.bgm.stop();
-    FlameAudio.bgm.play('menu_music.ogg');
+    AudioManager().playBgm('menu_music.ogg');
 
     super.initState();
 
     Flame.device.fullScreen();
 
     game = BounceBreaker();
+  }
+
+  @override
+  void dispose() {
+    AudioManager().stopBgm();
+    super.dispose();
   }
 
   @override
