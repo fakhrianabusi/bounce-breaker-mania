@@ -5,10 +5,16 @@ import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
 
 class LavaComponent extends PositionComponent with CollisionCallbacks {
-  LavaComponent()
-      : super(
-          priority: 100001,
-        );
+  bool _hasCollided = false;
+
+  LavaComponent() : super(priority: 100001);
+
+  @override
+  Future<void> onLoad() async {
+    super.onLoad();
+
+    _updateHitbox();
+  }
 
   @override
   void render(Canvas canvas) {
@@ -19,7 +25,9 @@ class LavaComponent extends PositionComponent with CollisionCallbacks {
   @override
   void update(double dt) {
     super.update(dt);
-    _updateHitbox();
+    if (!_hasCollided) {
+      _updateHitbox();
+    }
   }
 
   void _drawLava(Canvas canvas) {
@@ -59,6 +67,11 @@ class LavaComponent extends PositionComponent with CollisionCallbacks {
   }
 
   void _updateHitbox() {
+    // Verifica se o tamanho do componente é válido
+    if (size.x <= 0 || size.y <= 0) {
+      return;
+    }
+
     const waveHeight1 = 20.0;
     const waveHeight2 = 15.0;
     const waveLength1 = 100.0;
@@ -77,9 +90,23 @@ class LavaComponent extends PositionComponent with CollisionCallbacks {
     points.add(Vector2(size.x, size.y));
     points.add(Vector2(0, size.y));
 
+    if (points.length < 3) {
+      return;
+    }
+
     children.whereType<PolygonHitbox>().forEach(remove);
 
     final hitbox = PolygonHitbox(points);
     add(hitbox);
+  }
+
+  @override
+  void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
+    super.onCollision(intersectionPoints, other);
+    if (!_hasCollided) {
+      _hasCollided = true;
+      //Deactivate the hitbox afdter the first collision
+      children.whereType<PolygonHitbox>().forEach(remove);
+    }
   }
 }
