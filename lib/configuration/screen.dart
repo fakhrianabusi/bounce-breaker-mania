@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/flame.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -74,6 +75,10 @@ class Screen extends RectangleComponent with HasGameRef<BounceBreaker> {
     final rect = Rect.fromLTWH(60, 120, screenWidth - 120, screenHeight - 200);
     if (shouldDrawRectStroke) {
       canvas.drawRect(rect, strokePaint);
+    }
+    if (kIsWeb) {
+      shouldDrawRectStroke = false;
+      canvas.drawRect(Rect.fromLTWH(0, 0, screenWidth * 1.5, screenHeight), strokePaint);
     }
   }
 

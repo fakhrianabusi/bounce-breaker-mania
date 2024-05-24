@@ -19,6 +19,8 @@ dependencies:
   shared_preferences: ^2.2.3
   flame_rive: ^1.10.1
 
+  flutter_platform_widgets: ^7.0.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

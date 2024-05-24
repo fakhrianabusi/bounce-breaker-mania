@@ -3,6 +3,7 @@ import 'package:bounce_breaker/custom_widgets/initial_screen.dart';
 import 'package:bounce_breaker/widgets/levels_overlay.dart';
 import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../configuration/constants.dart';
@@ -50,7 +51,7 @@ class _FrameState extends State<Frame> {
                 child: FittedBox(
                   fit: BoxFit.cover,
                   child: SizedBox(
-                    width: screenWidth,
+                    width: kIsWeb ? screenWidth * 1.5 : screenWidth,
                     height: screenHeight,
                     child: GameWidget(
                       game: game,

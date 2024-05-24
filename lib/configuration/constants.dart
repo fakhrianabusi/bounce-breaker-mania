@@ -1,4 +1,5 @@
 import 'package:flame/game.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 double screenWidth = 768;
@@ -37,7 +38,7 @@ List<List<int>> level_1 = [
   [0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 ];
-final lv_1PositionX = (screenWidth - calculateLevelCenter(level_1)) / 2;
+final lv_1PositionX = (screenWidth - calculateLevelCenter(level_1, kIsWeb)) / 2;
 
 List<List<int>> level_2 = [
   [0, 0, 2, 1, 0, 1, 1, 0, 0],
@@ -48,7 +49,7 @@ List<List<int>> level_2 = [
   [0, 0, 1, 2, 1, 1, 1, 0, 0],
   [0, 0, 0, 1, 1, 2, 0, 0, 0],
 ];
-final lv_2PositionX = (screenWidth - calculateLevelCenter(level_2)) / 2;
+final lv_2PositionX = (screenWidth - calculateLevelCenter(level_2, kIsWeb)) / 2;
 
 List<List<int>> level_3 = [
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -64,9 +65,12 @@ List<List<int>> level_3 = [
   [0, 0, 0, 0, 3, 3, 0, 0, 3, 3, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 ];
-final lv_3PositionX = (screenWidth - calculateLevelCenter(level_3)) / 2;
+final lv_3PositionX = (screenWidth - calculateLevelCenter(level_3, kIsWeb)) / 2;
 
-double calculateLevelCenter(List<List<int>> level) {
+double calculateLevelCenter(List<List<int>> level, bool platform) {
+  if (platform) {
+    return level[0].length * (brickSize.x + brickPadding) - brickPadding * 36;
+  }
   return level[0].length * (brickSize.x + brickPadding) - brickPadding;
 }
 

@@ -1,12 +1,14 @@
 import 'dart:math' as math;
 
 import 'package:bounce_breaker/configuration/audio_manager.dart';
+import 'package:flame/camera.dart';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart' as flame_effects;
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:flame_audio/flame_audio.dart';
 import 'package:flame_rive/flame_rive.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../configuration/constants.dart';
@@ -70,7 +72,7 @@ class BounceBreaker extends FlameGame with HasCollisionDetection, DragCallbacks,
       artboards: myArtboard,
       target: stick,
       cornerRadius: const Radius.circular(20),
-      size: Vector2(screenWidth * 2, screenHeight * 0.3),
+      size: kIsWeb ? Vector2(screenWidth * 4, screenHeight * 0.3) : Vector2(screenWidth * 2, screenHeight * 0.3),
       position: Vector2(width / 2, height * 1.0),
     );
 
@@ -159,6 +161,11 @@ class BounceBreaker extends FlameGame with HasCollisionDetection, DragCallbacks,
   @override
   Future<void> onLoad() async {
     super.onLoad();
+    if (kIsWeb) {
+      camera.viewport = FixedResolutionViewport(
+        resolution: Vector2(screenWidth * 1.5, screenHeight),
+      );
+    }
     add(FallingCubes());
     await FlameAudio.audioCache.loadAll(['game_over.ogg', 'game_over_drama.ogg', 'arcade.ogg', 'menu_music.ogg']);
     collisionSoundPool = await FlameAudio.createPool('game_over.ogg', maxPlayers: 1);
