@@ -23,7 +23,7 @@ class _FrameState extends State<Frame> {
 
   @override
   void initState() {
-    AudioManager().playBgm('menu_music.ogg');
+    AudioManager().playBgm('menu_hype.mp3');
 
     super.initState();
 

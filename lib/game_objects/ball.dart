@@ -30,7 +30,7 @@ class Ball extends CircleComponent with CollisionCallbacks, HasGameRef<BounceBre
           paint: Paint()
             ..color = const Color.fromARGB(255, 198, 81, 214)
             ..style = PaintingStyle.fill,
-          children: [RectangleHitbox()],
+          children: [CircleHitbox()],
         );
   Vector2 velocity;
   final double difficultyModifier;
@@ -103,17 +103,6 @@ class Ball extends CircleComponent with CollisionCallbacks, HasGameRef<BounceBre
         velocity.x = -velocity.x;
       } else if (intersectionPoints.first.x >= game.width) {
         velocity.x = -velocity.x;
-        // } else if (intersectionPoints.first.y >= game.height) {
-        //   add(RemoveEffect(
-        //     delay: 0.35,
-        //   ));
-        //   game.screenShake.resume();
-        //   FlameAudio.bgm.stop();
-        //   Future.delayed(const Duration(milliseconds: 500), () {
-        //     gameOver();
-        //     game.screenShake.pause();
-        //   });
-        // }
       }
     } else if (other is PlayerStick) {
       gameRef.add(HitSpriteEffect(position: position.clone()));
@@ -137,6 +126,7 @@ class Ball extends CircleComponent with CollisionCallbacks, HasGameRef<BounceBre
       add(RemoveEffect(
         delay: 0.35,
       ));
+      FlameAudio.play('dead.mp3');
       collisionSoundPool.start();
       game.screenShake.resume();
       AudioManager().stopBgm();
