@@ -14,6 +14,7 @@ import '../configuration/screen.dart';
 import '../custom_widgets/score_manager.dart';
 import '../game_objects/components.dart';
 import '../game_objects/lava.dart';
+import '../widgets/falling_cubes.dart';
 
 enum GameStatus { initial, playing, paused, nextLevel, gameOver }
 
@@ -107,6 +108,7 @@ class BounceBreaker extends FlameGame with HasCollisionDetection, DragCallbacks,
   }
 
   Future<void> onStarGame() async {
+    removeAll(children.query<FallingCubes>());
     if (gameState == GameStatus.playing) return;
 
     world.removeAll(world.children.query<GameBlocks>());
@@ -157,6 +159,7 @@ class BounceBreaker extends FlameGame with HasCollisionDetection, DragCallbacks,
   @override
   Future<void> onLoad() async {
     super.onLoad();
+    add(FallingCubes());
     await FlameAudio.audioCache.loadAll(['game_over.ogg', 'game_over_drama.ogg', 'arcade.ogg', 'menu_music.ogg']);
     collisionSoundPool = await FlameAudio.createPool('game_over.ogg', maxPlayers: 1);
     final skillsArtboard = loadArtboard(RiveFile.asset('assets/test.riv'));

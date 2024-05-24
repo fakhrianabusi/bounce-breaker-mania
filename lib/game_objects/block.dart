@@ -23,6 +23,7 @@ class GameBlocks extends RectangleComponent with CollisionCallbacks, HasGameRef<
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
             ).createShader(Rect.fromLTWH(0, 0, size.x, size.y)),
+          priority: 100001,
         );
   int durability;
   int hardness;
