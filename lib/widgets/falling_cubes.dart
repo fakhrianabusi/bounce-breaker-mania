@@ -17,10 +17,10 @@ class FallingCubes extends Component with HasGameRef<BounceBreaker> {
 
   void _spawnCubes() {
     // Spawna cubos a cada 0.5 segundos
-    Future.delayed(const Duration(seconds: 3), () {
+    Future.delayed(const Duration(seconds: 2), () {
       final size = gameRef.size;
       final cubeSize = random.nextDouble() * 50 + 20;
-      final position = Vector2(random.nextDouble() * size.x, -cubeSize);
+      final position = Vector2(random.nextDouble() * size.x - 100, -cubeSize);
       final speed = random.nextDouble() * 50 + 50;
       final rotationSpeed = random.nextDouble() * pi / 2 + pi / 4;
       final color = Color.fromARGB(
