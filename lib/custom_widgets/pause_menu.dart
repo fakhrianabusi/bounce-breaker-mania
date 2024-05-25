@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:bounce_breaker/configuration/audio_manager.dart';
 import 'package:flutter/material.dart';
 
 import '../game/bounce_breaker_mania.dart';
@@ -41,6 +42,7 @@ class PauseMenu extends StatelessWidget {
                 ElevatedButton(
                   onPressed: () {
                     gameRef.resumeEngine();
+                    AudioManager().resumeBgm();
                     gameRef.overlays.remove(PauseMenu.id);
                   },
                   child: const Padding(

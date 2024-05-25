@@ -1,3 +1,4 @@
+import 'package:bounce_breaker/configuration/audio_manager.dart';
 import 'package:flutter/material.dart';
 
 import '../game/bounce_breaker_mania.dart';
@@ -21,7 +22,7 @@ class PauseButton extends StatelessWidget {
         child: IconButton(
           onPressed: () {
             gameRef.pauseEngine();
-
+            AudioManager().pauseBgm();
             gameRef.overlays.add(PauseMenu.id);
           },
           icon: const Icon(

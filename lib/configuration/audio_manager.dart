@@ -28,6 +28,20 @@ class AudioManager {
     }
   }
 
+  void pauseBgm() {
+    if (_isBgmPlaying) {
+      FlameAudio.bgm.pause();
+      _isBgmPlaying = false;
+    }
+  }
+
+  void resumeBgm() {
+    if (!_isBgmPlaying) {
+      FlameAudio.bgm.resume();
+      _isBgmPlaying = true;
+    }
+  }
+
   void playSound(String fileName) {
     if (!_isSoundEffectPlaying) {
       log('Playing sound effect: $fileName');
