@@ -178,6 +178,11 @@ class BounceBreaker extends FlameGame
       camera.viewport = FixedResolutionViewport(
         resolution: Vector2(screenWidth * 1.5, screenHeight),
       );
+      keyboardController = KeyboardController(
+        playerStickMoveSteps: playerStickMoveSteps,
+        onStarGame: onStarGame,
+        world: world,
+      );
     }
     add(FallingCubes());
     await FlameAudio.audioCache.loadAll(['game_over.ogg', 'game_over_drama.ogg', 'arcade.ogg', 'menu_music.ogg']);
@@ -191,18 +196,10 @@ class BounceBreaker extends FlameGame
 
     world.add(Screen());
     gameState = GameStatus.initial;
-    if (kIsWeb) {
-      keyboardController = KeyboardController(
-        playerStickMoveSteps: playerStickMoveSteps,
-        onStarGame: onStarGame,
-        world: world,
-      );
-    }
   }
 
   @override
   KeyEventResult onKeyEvent(KeyEvent event, Set<LogicalKeyboardKey> keysPressed) {
-    // Chame o método da superclasse
     KeyEventResult result = super.onKeyEvent(event, keysPressed);
 
     if (keyboardController != null) {

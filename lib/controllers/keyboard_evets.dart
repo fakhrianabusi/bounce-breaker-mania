@@ -38,20 +38,3 @@ class KeyboardController {
     }
   }
 }
-
-  // KeyEventResult handleKeyEvent(KeyEvent event, Set<LogicalKeyboardKey> keysPressed) {
-  //   switch (event.logicalKey) {
-  //     case LogicalKeyboardKey.arrowLeft:
-  //       world.children.query<PlayerStick>().first.moveBy(-playerStickMoveSteps * 1.5);
-  //       break;
-  //     case LogicalKeyboardKey.arrowRight:
-  //       world.children.query<PlayerStick>().first.moveBy(playerStickMoveSteps * 1.5);
-  //       break;
-  //     case LogicalKeyboardKey.space:
-  //     case LogicalKeyboardKey.enter:
-  //       onStarGame();
-  //       break;
-  //   }
-  //   return KeyEventResult.handled;
-  // }
-
