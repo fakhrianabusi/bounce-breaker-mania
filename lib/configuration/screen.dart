@@ -10,6 +10,8 @@ import 'package:google_fonts/google_fonts.dart';
 import '../game/bounce_breaker_mania.dart';
 import 'constants.dart';
 
+PaintingStyle strokeStyle = PaintingStyle.fill;
+
 class Screen extends RectangleComponent with HasGameRef<BounceBreaker> {
   Screen()
       : super(
@@ -28,17 +30,11 @@ class Screen extends RectangleComponent with HasGameRef<BounceBreaker> {
       begin: Alignment.topCenter,
       end: Alignment.bottomCenter,
       colors: [
-        Colors.white,
-        Colors.pink,
-        Colors.purple,
+        Colors.transparent,
         Colors.blue,
-        Colors.green,
-        Colors.yellow,
-        Colors.orange,
-        Colors.red
       ],
     ).createShader(Rect.fromLTWH(0, 0, screenWidth, screenHeight))
-    ..style = PaintingStyle.stroke
+    ..style = strokeStyle
     ..strokeCap = StrokeCap.round
     ..strokeWidth = 10
     ..strokeJoin = StrokeJoin.round;
@@ -52,7 +48,7 @@ class Screen extends RectangleComponent with HasGameRef<BounceBreaker> {
       ..sprite = Sprite(backgroundImage)
       ..size = size
       ..position = Vector2.zero()
-      ..setAlpha(50);
+      ..setAlpha(100);
     await add(background);
     scoreCard = TextBoxComponent(
       size: Vector2(600, 100),
@@ -72,13 +68,13 @@ class Screen extends RectangleComponent with HasGameRef<BounceBreaker> {
   @override
   void render(Canvas canvas) {
     super.render(canvas);
-    final rect = Rect.fromLTWH(60, 120, screenWidth - 120, screenHeight - 200);
+    final rect = Rect.fromLTWH(30, 120, screenWidth - 60, screenHeight - 162);
     if (shouldDrawRectStroke) {
       canvas.drawRect(rect, strokePaint);
     }
-    if (kIsWeb) {
+    if (kIsWeb && game.gameState != GameStatus.playing) {
       shouldDrawRectStroke = false;
-      canvas.drawRect(Rect.fromLTWH(0, 0, screenWidth * 1.5, screenHeight), strokePaint);
+      canvas.drawRect(Rect.fromLTWH(30, 120, screenWidth + 326, screenHeight - 162), strokePaint);
     }
   }
 

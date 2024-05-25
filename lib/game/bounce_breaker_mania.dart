@@ -38,6 +38,7 @@ class BounceBreaker extends FlameGame with HasCollisionDetection, DragCallbacks,
   late SpriteComponent ballCount;
   late SpriteComponent stickSize;
   late SpriteComponent ballSpeed;
+  late SpriteComponent playerStick;
 
   // ...
 
@@ -66,6 +67,7 @@ class BounceBreaker extends FlameGame with HasCollisionDetection, DragCallbacks,
       size: playerStickSize,
       position: Vector2(width / 2, height * 0.65),
       cornerRadius: Radius.circular(ballRadius / 2),
+      sprite: playerStick.sprite!,
     );
 
     final swipeControl = SwipeControlArea(
@@ -125,6 +127,13 @@ class BounceBreaker extends FlameGame with HasCollisionDetection, DragCallbacks,
     final powerUpSprite1 = await loadSprite('ball_count.png');
     final powerUpSprite2 = await loadSprite('stick_size.png');
     final powerUpSprite3 = await loadSprite('ball_speed.png');
+    final stickSprite = await loadSprite('player_stick.png');
+
+    playerStick = SpriteComponent(
+      sprite: stickSprite,
+      size: playerStickSize,
+      anchor: Anchor.center,
+    );
 
     ballCount = SpriteComponent(
       sprite: powerUpSprite1,

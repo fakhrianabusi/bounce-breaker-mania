@@ -12,21 +12,19 @@ import 'ball.dart';
 import 'extra_ball_power.dart';
 import 'power_up.dart';
 
-class PlayerStick extends PositionComponent with DragCallbacks, HasGameRef<BounceBreaker> {
+class PlayerStick extends SpriteComponent with DragCallbacks, HasGameRef<BounceBreaker> {
   PlayerStick({
     required this.cornerRadius,
     required super.position,
     required super.size,
+    required Sprite sprite,
   }) : super(
           anchor: Anchor.center,
           children: [RectangleHitbox()],
+          sprite: sprite,
         );
 
   final Radius cornerRadius;
-
-  final _paint = Paint()
-    ..color = const Color(0xffffffff)
-    ..style = PaintingStyle.fill;
 
   @override
   void update(double dt) {
@@ -38,17 +36,6 @@ class PlayerStick extends PositionComponent with DragCallbacks, HasGameRef<Bounc
         powerUp.removeFromParent();
       }
     });
-  }
-
-  @override
-  void render(Canvas canvas) {
-    super.render(canvas);
-    canvas.drawRRect(
-        RRect.fromRectAndRadius(
-          Offset.zero & size.toSize(),
-          cornerRadius,
-        ),
-        _paint);
   }
 
   @override

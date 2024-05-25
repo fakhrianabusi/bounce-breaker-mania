@@ -21,6 +21,8 @@ dependencies:
 
   flutter_platform_widgets: ^7.0.0
 
+  flutter_gradient_animation_text: ^1.0.2
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
