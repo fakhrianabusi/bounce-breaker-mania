@@ -2,6 +2,7 @@ import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../configuration/audio_manager.dart';
 import '../game_objects/components.dart';
 
 class KeyboardController {
@@ -34,6 +35,7 @@ class KeyboardController {
       world.children.query<PlayerStick>().first.moveBy(playerStickMoveSteps * 1.5);
     }
     if (keysPressed.contains(LogicalKeyboardKey.space) || keysPressed.contains(LogicalKeyboardKey.enter)) {
+      AudioManager().stopBgm();
       onStarGame();
     }
   }
