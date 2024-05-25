@@ -10,9 +10,11 @@ import 'package:flame_audio/flame_audio.dart';
 import 'package:flame_rive/flame_rive.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../configuration/constants.dart';
 import '../configuration/screen.dart';
+import '../controllers/keyboard_evets.dart';
 import '../custom_widgets/score_manager.dart';
 import '../game_objects/components.dart';
 import '../game_objects/lava.dart';
@@ -23,7 +25,11 @@ enum GameStatus { initial, playing, paused, nextLevel, gameOver }
 late Artboard myArtboard;
 ValueNotifier<int> levelCounter = ValueNotifier<int>(0);
 
-class BounceBreaker extends FlameGame with HasCollisionDetection, DragCallbacks, TapDetector {
+class BounceBreaker extends FlameGame
+    with HasCollisionDetection, HasKeyboardHandlerComponents, DragCallbacks, TapDetector {
+  KeyboardController? keyboardController;
+  final double playerStickMoveSteps = 30;
+
   BounceBreaker()
       : super(
           camera: CameraComponent.withFixedResolution(
@@ -185,6 +191,31 @@ class BounceBreaker extends FlameGame with HasCollisionDetection, DragCallbacks,
 
     world.add(Screen());
     gameState = GameStatus.initial;
+    if (kIsWeb) {
+      keyboardController = KeyboardController(
+        playerStickMoveSteps: playerStickMoveSteps,
+        onStarGame: onStarGame,
+        world: world,
+      );
+    }
+  }
+
+  @override
+  KeyEventResult onKeyEvent(KeyEvent event, Set<LogicalKeyboardKey> keysPressed) {
+    // Chame o método da superclasse
+    KeyEventResult result = super.onKeyEvent(event, keysPressed);
+
+    if (keyboardController != null) {
+      result = keyboardController!.handleKeyEvent(event);
+    }
+
+    return result;
+  }
+
+  @override
+  void update(double dt) {
+    super.update(dt);
+    keyboardController?.update(dt);
   }
 
   @override
