@@ -24,7 +24,6 @@ late Artboard myArtboard;
 ValueNotifier<int> levelCounter = ValueNotifier<int>(0);
 
 class BounceBreaker extends FlameGame with HasCollisionDetection, DragCallbacks, TapDetector {
-  late AudioPool collisionSoundPool;
   BounceBreaker()
       : super(
           camera: CameraComponent.withFixedResolution(
@@ -83,7 +82,6 @@ class BounceBreaker extends FlameGame with HasCollisionDetection, DragCallbacks,
 
   Ball _buildBall() {
     return Ball(
-      collisionSoundPool: collisionSoundPool,
       difficultyModifier: difficultyModifier,
       radius: ballRadius,
       position: size / 2,
@@ -177,7 +175,6 @@ class BounceBreaker extends FlameGame with HasCollisionDetection, DragCallbacks,
     }
     add(FallingCubes());
     await FlameAudio.audioCache.loadAll(['game_over.ogg', 'game_over_drama.ogg', 'arcade.ogg', 'menu_music.ogg']);
-    collisionSoundPool = await FlameAudio.createPool('game_over.ogg', maxPlayers: 1);
     final skillsArtboard = loadArtboard(RiveFile.asset('assets/test.riv'));
     myArtboard = await skillsArtboard;
 

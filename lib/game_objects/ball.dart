@@ -22,7 +22,6 @@ class Ball extends CircleComponent with CollisionCallbacks, HasGameRef<BounceBre
     required super.position,
     required double radius,
     required this.difficultyModifier,
-    required this.collisionSoundPool,
   }) : super(
           radius: radius,
           anchor: Anchor.center,
@@ -34,7 +33,6 @@ class Ball extends CircleComponent with CollisionCallbacks, HasGameRef<BounceBre
         );
   Vector2 velocity;
   final double difficultyModifier;
-  final AudioPool collisionSoundPool;
   final Map<int, Trail> _trails = {};
 
   @override
@@ -84,9 +82,9 @@ class Ball extends CircleComponent with CollisionCallbacks, HasGameRef<BounceBre
     });
     gameRef.scoreManager.currentScore.value = 0;
 
-    Future.delayed(const Duration(seconds: 3), () {
+    AudioManager().playSound('game_over.ogg');
+    Future.delayed(const Duration(seconds: 2), () {
       AudioManager().playBgm('game_over_drama.ogg');
-      collisionSoundPool.dispose();
     });
     gameRef.overlays.add(GameOverMenu.id);
   }
@@ -126,10 +124,10 @@ class Ball extends CircleComponent with CollisionCallbacks, HasGameRef<BounceBre
       add(RemoveEffect(
         delay: 0.35,
       ));
-      FlameAudio.play('dead.mp3');
-      collisionSoundPool.start();
-      game.screenShake.resume();
       AudioManager().stopBgm();
+      FlameAudio.play('dead.mp3');
+      game.screenShake.resume();
+      // print('--------------------------------- here ---------------------------------');
       Future.delayed(const Duration(milliseconds: 500), () {
         gameOver();
         game.screenShake.pause();
