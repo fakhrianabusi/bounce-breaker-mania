@@ -101,8 +101,8 @@ class LavaComponent extends PositionComponent with CollisionCallbacks {
   }
 
   @override
-  void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
-    super.onCollision(intersectionPoints, other);
+  void onCollisionStart(Set<Vector2> intersectionPoints, PositionComponent other) {
+    super.onCollisionStart(intersectionPoints, other);
     if (!_hasCollided) {
       _hasCollided = true;
       //Deactivate the hitbox afdter the first collision

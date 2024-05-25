@@ -127,7 +127,7 @@ class Ball extends CircleComponent with CollisionCallbacks, HasGameRef<BounceBre
       AudioManager().stopBgm();
       FlameAudio.play('dead.mp3');
       game.screenShake.resume();
-      // print('--------------------------------- here ---------------------------------');
+      print('--------------------------------- here ---------------------------------');
       Future.delayed(const Duration(milliseconds: 500), () {
         gameOver();
         game.screenShake.pause();

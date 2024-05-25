@@ -45,8 +45,10 @@ class AudioManager {
   void playSound(String fileName) {
     if (!_isSoundEffectPlaying) {
       log('Playing sound effect: $fileName');
-      FlameAudio.play(fileName);
       _isSoundEffectPlaying = true;
+      FlameAudio.play(fileName).then((_) {
+        _isSoundEffectPlaying = false;
+      });
     } else {
       log('Sound effect already playing.');
     }
