@@ -180,7 +180,7 @@ class BounceBreaker extends FlameGame
       );
       keyboardController = KeyboardController(
         playerStickMoveSteps: playerStickMoveSteps,
-        onStarGame: onStarGame,
+        onStarGame: () {},
         world: world,
       );
     }
