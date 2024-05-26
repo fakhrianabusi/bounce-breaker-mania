@@ -57,7 +57,7 @@ class BounceBreaker extends FlameGame
   double get height => size.y;
 
   Future<void> reset() async {
-    AudioManager().playBgm('arcade.ogg');
+    AudioManager().playBgm('level_one.mp3');
     levelCounter.value = 0;
 
     world.add(_buildBall());
@@ -168,7 +168,7 @@ class BounceBreaker extends FlameGame
       ..position = Vector2(0, size.y - lavaHeight)
       ..anchor = Anchor.topLeft;
     add(lavaComponent);
-    AudioManager().playBgm('arcade.ogg');
+    AudioManager().playBgm('level_one.mp3');
   }
 
   @override
@@ -185,7 +185,13 @@ class BounceBreaker extends FlameGame
       );
     }
     add(FallingCubes());
-    await FlameAudio.audioCache.loadAll(['game_over.ogg', 'game_over_drama.ogg', 'arcade.ogg', 'menu_music.ogg']);
+    await FlameAudio.audioCache.loadAll([
+      'game_over.ogg',
+      'game_over_drama.ogg',
+      'arcade.ogg',
+      'menu_music.ogg',
+      'level_one.mp3',
+    ]);
     final skillsArtboard = loadArtboard(RiveFile.asset('assets/test.riv'));
     myArtboard = await skillsArtboard;
 
