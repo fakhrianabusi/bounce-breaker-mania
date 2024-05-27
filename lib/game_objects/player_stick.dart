@@ -80,7 +80,7 @@ class PlayerStick extends SpriteComponent with DragCallbacks, HasGameRef<BounceB
     switch (powerUp.type) {
       case PowerUpType.stickSize:
         if (powerUp.duration.inSeconds > 0) {
-          size = Vector2(game.width / 2, game.height / 50);
+          size = Vector2(game.width / 2, game.height / 80);
           Future.delayed(powerUp.duration, resetSize);
         } else {
           size = playerStickSize;

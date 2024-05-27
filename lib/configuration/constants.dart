@@ -11,7 +11,7 @@ double brickGutter = screenWidth * 0.015;
 
 const screenColor = Color.fromARGB(30, 255, 0, 221);
 
-Vector2 playerStickSize = Vector2(screenWidth / 6, screenHeight / 90);
+Vector2 playerStickSize = Vector2(screenWidth / 6, screenHeight / 80);
 
 const difficultyModifier = 1.01;
 final brickSize = Vector2(screenWidth / 16, screenHeight / 40);
