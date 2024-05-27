@@ -1,6 +1,5 @@
-import 'dart:developer';
-
 import 'package:bounce_breaker/configuration/audio_manager.dart';
+import 'package:bounce_breaker/widgets/frame.dart';
 import 'package:flutter/material.dart';
 
 import '../game/bounce_breaker_mania.dart';
@@ -25,7 +24,9 @@ class PauseMenu extends StatelessWidget {
               children: [
                 ElevatedButton(
                   onPressed: () {
-                    log('hello');
+                    Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(builder: (context) => const Frame()),
+                    );
                   },
                   child: const Padding(
                     padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 14.0),
