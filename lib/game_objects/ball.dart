@@ -82,8 +82,7 @@ class Ball extends CircleComponent with CollisionCallbacks, HasGameRef<BounceBre
     });
     gameRef.scoreManager.currentScore.value = 0;
 
-    AudioManager().playSound('game_over.ogg');
-    Future.delayed(const Duration(seconds: 2), () {
+    Future.delayed(const Duration(seconds: 1), () {
       AudioManager().playBgm('game_over_drama.ogg');
     });
     gameRef.overlays.add(GameOverMenu.id);
@@ -126,8 +125,11 @@ class Ball extends CircleComponent with CollisionCallbacks, HasGameRef<BounceBre
       ));
       AudioManager().stopBgm();
       FlameAudio.play('dead.mp3');
+      Future.delayed(const Duration(milliseconds: 300), () {
+        AudioManager().playSound('game_over.ogg');
+      });
       game.screenShake.resume();
-      print('--------------------------------- here ---------------------------------');
+      debugPrint('--------------------------------- here ---------------------------------');
       Future.delayed(const Duration(milliseconds: 500), () {
         gameOver();
         game.screenShake.pause();
