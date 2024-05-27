@@ -26,7 +26,7 @@ enum GameStatus { initial, playing, paused, nextLevel, gameOver }
 late Artboard myArtboard;
 ValueNotifier<int> levelCounter = ValueNotifier<int>(0);
 late final PlayerStick playerStick;
-late final PowerUpDisplay powerUpDisplay;
+final PowerUpDisplay powerUpDisplay = PowerUpDisplay();
 
 class BounceBreaker extends FlameGame
     with HasCollisionDetection, HasKeyboardHandlerComponents, DragCallbacks, TapDetector {
@@ -175,7 +175,7 @@ class BounceBreaker extends FlameGame
   @override
   Future<void> onLoad() async {
     super.onLoad();
-    powerUpDisplay = PowerUpDisplay();
+
     add(powerUpDisplay);
     if (kIsWeb) {
       camera.viewport = FixedResolutionViewport(resolution: Vector2(screenWidth * 1.5, screenHeight));

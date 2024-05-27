@@ -1,9 +1,8 @@
-import 'dart:developer';
-
 import 'package:bounce_breaker/configuration/audio_manager.dart';
 import 'package:flutter/material.dart';
 
 import '../game/bounce_breaker_mania.dart';
+import '../widgets/frame.dart';
 
 class GameOverMenu extends StatelessWidget {
   static const id = 'game_over_menu';
@@ -35,7 +34,8 @@ class GameOverMenu extends StatelessWidget {
                 ElevatedButton(
                   style: ButtonStyle(foregroundColor: MaterialStateProperty.all(Colors.black87)),
                   onPressed: () {
-                    log('hello');
+                    Navigator.pushAndRemoveUntil(
+                        context, MaterialPageRoute(builder: (context) => const Frame()), (route) => false);
                   },
                   child: const Padding(
                     padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 14.0),
