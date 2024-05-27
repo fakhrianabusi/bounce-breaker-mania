@@ -55,11 +55,17 @@ class Screen extends RectangleComponent with HasGameRef<BounceBreaker> {
       text: '0',
       textRenderer: TextPaint(
           style: TextStyle(
-        fontSize: 32,
-        color: Colors.white,
-        fontWeight: FontWeight.w500,
-        fontFamily: GoogleFonts.pressStart2p().fontFamily,
-      )),
+              fontSize: 32,
+              color: Color.lerp(Colors.green, Colors.greenAccent, 0.5),
+              fontWeight: FontWeight.w500,
+              fontFamily: GoogleFonts.pressStart2p().fontFamily,
+              shadows: const [
+            Shadow(
+              color: Colors.greenAccent,
+              offset: Offset(0, 0),
+              blurRadius: 12,
+            ),
+          ])),
     )..position = Vector2(50, 40);
 
     await add(scoreCard);

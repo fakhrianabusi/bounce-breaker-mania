@@ -16,6 +16,8 @@ import '../configuration/screen.dart';
 import '../custom_widgets/game_over_menu.dart';
 import '../game/bounce_breaker_mania.dart';
 
+double maxSpeed = 800.0;
+
 class Ball extends CircleComponent with CollisionCallbacks, HasGameRef<BounceBreaker> {
   Ball({
     required this.velocity,
@@ -31,6 +33,7 @@ class Ball extends CircleComponent with CollisionCallbacks, HasGameRef<BounceBre
             ..style = PaintingStyle.fill,
           children: [CircleHitbox()],
         );
+
   Vector2 velocity;
   final double difficultyModifier;
   final Map<int, Trail> _trails = {};
@@ -57,7 +60,7 @@ class Ball extends CircleComponent with CollisionCallbacks, HasGameRef<BounceBre
     gameRef.world.add(trail);
   }
 
-  gameOver() {
+  void gameOver() {
     removeFromParent();
     gameRef.world.children.whereType<GameBlocks>().forEach((element) {
       element.removeFromParent();
@@ -95,7 +98,6 @@ class Ball extends CircleComponent with CollisionCallbacks, HasGameRef<BounceBre
     if (other is Screen) {
       if (intersectionPoints.first.y <= 0) {
         velocity.y = -velocity.y;
-        // velocity.setFrom(velocity - velocity * 0.3); // friction
       } else if (intersectionPoints.first.x <= 0) {
         velocity.x = -velocity.x;
       } else if (intersectionPoints.first.x >= game.width) {
@@ -104,17 +106,22 @@ class Ball extends CircleComponent with CollisionCallbacks, HasGameRef<BounceBre
     } else if (other is PlayerStick) {
       gameRef.add(HitSpriteEffect(position: position.clone()));
       velocity.y = -velocity.y;
-      velocity.x = velocity.x + (position.x - other.position.x) / other.size.x * game.width * 0.3;
+
+      double impactFactor = (position.x - other.position.x) / other.size.x;
+      double speed = velocity.length;
+      velocity.x = velocity.x + impactFactor * game.width * 0.3;
+
+      velocity.setFrom(velocity.normalized() * speed);
     } else if (other is GameBlocks) {
-      if (position.y < other.position.y - other.size.y / 2) {
+      double deltaX = position.x - other.position.x;
+      double deltaY = position.y - other.position.y;
+
+      if (deltaY.abs() > deltaX.abs()) {
         velocity.y = -velocity.y;
-      } else if (position.y > other.position.y + other.size.y / 2) {
-        velocity.y = -velocity.y;
-      } else if (position.x < other.position.x) {
-        velocity.x = -velocity.x;
-      } else if (position.x > other.position.x) {
+      } else {
         velocity.x = -velocity.x;
       }
+
       velocity.setFrom(velocity * difficultyModifier);
     } else if (other is LavaComponent) {
       gameRef.add(ExplosionEffect(
@@ -134,6 +141,9 @@ class Ball extends CircleComponent with CollisionCallbacks, HasGameRef<BounceBre
         gameOver();
         game.screenShake.pause();
       });
+    }
+    if (velocity.length > maxSpeed) {
+      velocity.setFrom(velocity.normalized() * maxSpeed);
     }
   }
 }

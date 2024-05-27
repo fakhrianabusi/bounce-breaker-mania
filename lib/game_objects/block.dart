@@ -99,7 +99,7 @@ class GameBlocks extends RectangleComponent with CollisionCallbacks, HasGameRef<
         final random = Random();
         final powerUpTypes = [PowerUpType.ballCount, PowerUpType.stickSize, PowerUpType.ballSpeed];
         final selectedType = powerUpTypes[random.nextInt(powerUpTypes.length)];
-        final powerUpDuration = Duration(seconds: random.nextInt(10) + 7); // 7 a 16 segundos de duração
+        final powerUpDuration = Duration(seconds: random.nextInt(5) + 5); // 5 to 10 seconds
 
         final powerUp = PowerUp(
           sprite: selecSpritebyPowerUpType(selectedType),

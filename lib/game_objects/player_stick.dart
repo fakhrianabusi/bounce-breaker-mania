@@ -60,14 +60,14 @@ class PlayerStick extends SpriteComponent with DragCallbacks, HasGameRef<BounceB
   }
 
   void resetSpeed() {
-    game.children.whereType<Ball>().forEach((ball) {
+    gameRef.world.children.whereType<Ball>().forEach((ball) {
       ball.velocity /= 1.5;
     });
   }
 
   void removeExtraBalls() {
-    game.children.whereType<ExtraBall>().forEach((ball) {
-      ball.removeFromParent();
+    gameRef.world.children.whereType<ExtraBall>().forEach((element) {
+      element.removeFromParent();
     });
   }
 
@@ -84,12 +84,12 @@ class PlayerStick extends SpriteComponent with DragCallbacks, HasGameRef<BounceB
         break;
       case PowerUpType.ballSpeed:
         if (powerUp.duration.inSeconds > 0) {
-          game.children.whereType<Ball>().forEach((ball) {
+          gameRef.world.children.whereType<Ball>().forEach((ball) {
             ball.velocity.setFrom(ball.velocity * 2.5);
           });
           Future.delayed(powerUp.duration, resetSpeed);
         } else {
-          game.children.whereType<Ball>().forEach((ball) {
+          gameRef.world.children.whereType<Ball>().forEach((ball) {
             ball.velocity.setFrom(ball.velocity * 2.5);
           });
         }

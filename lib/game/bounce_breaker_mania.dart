@@ -38,14 +38,11 @@ class BounceBreaker extends FlameGame
           ),
         );
   final scoreManager = ScoreManager();
-  // final ValueNotifier<int> score = ValueNotifier<int>(0);
   final rand = math.Random();
   late SpriteComponent ballCount;
   late SpriteComponent stickSize;
   late SpriteComponent ballSpeed;
   late SpriteComponent playerStick;
-
-  // ...
 
   late final screenShake = flame_effects.MoveEffect.by(
     Vector2(0, 5),
@@ -175,9 +172,7 @@ class BounceBreaker extends FlameGame
   Future<void> onLoad() async {
     super.onLoad();
     if (kIsWeb) {
-      camera.viewport = FixedResolutionViewport(
-        resolution: Vector2(screenWidth * 1.5, screenHeight),
-      );
+      camera.viewport = FixedResolutionViewport(resolution: Vector2(screenWidth * 1.5, screenHeight));
       keyboardController = KeyboardController(
         playerStickMoveSteps: playerStickMoveSteps,
         onStarGame: () {},
