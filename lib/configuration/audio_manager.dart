@@ -14,7 +14,7 @@ class AudioManager {
   void playBgm(String fileName) {
     if (!_isBgmPlaying) {
       log('Playing BGM: $fileName');
-      FlameAudio.bgm.play(fileName);
+      FlameAudio.bgm.play(fileName, volume: 0.7);
       _isBgmPlaying = true;
     } else {
       log('BGM already playing.');

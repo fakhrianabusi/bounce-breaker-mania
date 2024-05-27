@@ -96,6 +96,8 @@ class Ball extends CircleComponent with CollisionCallbacks, HasGameRef<BounceBre
     super.onCollisionStart(intersectionPoints, other);
 
     if (other is Screen) {
+      FlameAudio.play('batendo_nas_laterais.mp3');
+
       if (intersectionPoints.first.y <= 0) {
         velocity.y = -velocity.y;
       } else if (intersectionPoints.first.x <= 0) {
@@ -104,6 +106,8 @@ class Ball extends CircleComponent with CollisionCallbacks, HasGameRef<BounceBre
         velocity.x = -velocity.x;
       }
     } else if (other is PlayerStick) {
+      FlameAudio.play('batendo_na_base.mp3');
+
       gameRef.add(HitSpriteEffect(position: position.clone()));
       velocity.y = -velocity.y;
 
@@ -113,6 +117,8 @@ class Ball extends CircleComponent with CollisionCallbacks, HasGameRef<BounceBre
 
       velocity.setFrom(velocity.normalized() * speed);
     } else if (other is GameBlocks) {
+      FlameAudio.play('quebrando_bloco.mp3');
+
       double deltaX = position.x - other.position.x;
       double deltaY = position.y - other.position.y;
 
