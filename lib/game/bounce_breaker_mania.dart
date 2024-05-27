@@ -19,14 +19,11 @@ import '../custom_widgets/score_manager.dart';
 import '../game_objects/components.dart';
 import '../game_objects/lava.dart';
 import '../widgets/falling_cubes.dart';
-import '../widgets/powerup_counter.dart';
 
 enum GameStatus { initial, playing, paused, nextLevel, gameOver }
 
 late Artboard myArtboard;
 ValueNotifier<int> levelCounter = ValueNotifier<int>(0);
-late final PlayerStick playerStick;
-late final PowerUpDisplay powerUpDisplay;
 
 class BounceBreaker extends FlameGame
     with HasCollisionDetection, HasKeyboardHandlerComponents, DragCallbacks, TapDetector {
@@ -73,7 +70,6 @@ class BounceBreaker extends FlameGame
       position: Vector2(width / 2, height * 0.65),
       cornerRadius: Radius.circular(ballRadius / 2),
       sprite: playerStick.sprite!,
-      powerUpDisplay: powerUpDisplay,
     );
 
     final swipeControl = SwipeControlArea(
@@ -175,8 +171,6 @@ class BounceBreaker extends FlameGame
   @override
   Future<void> onLoad() async {
     super.onLoad();
-    powerUpDisplay = PowerUpDisplay();
-    add(powerUpDisplay);
     if (kIsWeb) {
       camera.viewport = FixedResolutionViewport(resolution: Vector2(screenWidth * 1.5, screenHeight));
       keyboardController = KeyboardController(

@@ -8,19 +8,16 @@ import 'package:flutter/material.dart';
 
 import '../configuration/constants.dart';
 import '../game/bounce_breaker_mania.dart';
-import '../widgets/powerup_counter.dart';
 import 'ball.dart';
 import 'extra_ball_power.dart';
 import 'power_up.dart';
 
 class PlayerStick extends SpriteComponent with DragCallbacks, HasGameRef<BounceBreaker> {
-  final PowerUpDisplay powerUpDisplay;
   PlayerStick({
     required this.cornerRadius,
     required super.position,
     required super.size,
     required Sprite sprite,
-    required this.powerUpDisplay,
   }) : super(
           anchor: Anchor.center,
           children: [RectangleHitbox()],
@@ -75,8 +72,6 @@ class PlayerStick extends SpriteComponent with DragCallbacks, HasGameRef<BounceB
   }
 
   void onPowerUp(PowerUp powerUp) async {
-    powerUpDisplay.addPowerUp(powerUp.type, powerUp.duration);
-
     switch (powerUp.type) {
       case PowerUpType.stickSize:
         if (powerUp.duration.inSeconds > 0) {
@@ -85,6 +80,7 @@ class PlayerStick extends SpriteComponent with DragCallbacks, HasGameRef<BounceB
         } else {
           size = playerStickSize;
         }
+
         break;
       case PowerUpType.ballSpeed:
         if (powerUp.duration.inSeconds > 0) {
