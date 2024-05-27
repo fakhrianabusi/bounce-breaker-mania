@@ -34,6 +34,7 @@ class GameOverMenu extends StatelessWidget {
                 ElevatedButton(
                   style: ButtonStyle(foregroundColor: MaterialStateProperty.all(Colors.black87)),
                   onPressed: () {
+                    AudioManager().stopBgm();
                     Navigator.pushAndRemoveUntil(
                         context, MaterialPageRoute(builder: (context) => const Frame()), (route) => false);
                   },
